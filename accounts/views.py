@@ -14,7 +14,7 @@ from django.contrib.auth.models import Group
 from .models import *
 from .forms import  CreateUserForm
 
-# from .decorators import unauthenticated_user, allowed_users, admin_only
+from .decorators import *
 
 
 def registerPage(request):
@@ -62,11 +62,13 @@ def logoutUser(request):
 	logout(request)
 	return redirect('login')
 
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=[ 'staff'])
 def staff(request):
 	return render(request, 'accounts/staff.html')
 
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['tenant'])
 def tenant(request):
 	return render(request, 'accounts/tenant.html')
 
