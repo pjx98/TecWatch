@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Complaint submitted successfully</title>
+    <link rel="stylesheet" href="C:/Users/minxuan/tecwatch/tecwatch/src/App.css">
+    
+</head>
+    
+<body>
+<center>
+    <h1>Complaint is successfully created on {{complaint.date_created}}</h1>
+    <h2>{{complaint.title}}</h2>
+    
+    <p>
+        Given deadline: {{complaint.deadline}} <br>
+        Score: {{complaint.score}} <br>
+        Uploaded Picture: <br>
+        <img src="{{complaint.picture.url}}" width = "200px" height="200px"> <br>
+        Suggestions: {{complaint.suggestions}} <br>
+        Notes: {{complaint.notes}} <br> <hr>
+
+    </p>
+    
+    <button type="button"><a href="/singhealth/homestaff">Return Home</a></button>
+    
+    
+</center>
+    
+    
+    
+</body>
+</html>

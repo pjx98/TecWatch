@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View all Complaints</title>
+    <link rel="stylesheet" href="C:/Users/minxuan/tecwatch/tecwatch/src/App.css">
+    
+</head>
+    
+<body>
+<center>
+    <h1>View all Complaints</h1>
+    
+    <p>
+        
+                {% for com in complaints %}
+                Title: {{com.title}} <br>
+                Created on: {{com.date_created}} <br>
+                Given deadline: {{com.deadline}} <br>
+                Score: {{com.score}} <br>
+                Uploaded Picture: <br>
+                <img src="{{com.picture.url}}" height = "200px" width="200px"> <br>
+                Suggestions: {{com.suggestions}} <br>
+                Notes: {{com.notes}} <br> <hr>
+                {% endfor %}
+
+    </p>
+    
+    
+</center>
+    
+    
+    
+</body>
+</html>

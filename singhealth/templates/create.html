@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Complaint</title>
+    <link rel="stylesheet" href="C:/Users/minxuan/tecwatch/tecwatch/src/App.css">
+    
+</head>
+    
+<body>
+<center>
+    <h1>Create Complaint</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+        
+            {{ form.as_table }}
+        
+        </table>
+        <input type="submit" name="submit">
+    
+    
+    </form>
+    
+    
+    
+    
+</center>
+    
+    
+    
+</body>
+</html>
