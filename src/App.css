@@ -7,8 +7,7 @@
   
   .home,
   .services,
-  .products,
-  .sign-up {
+  .log-in {
     display: flex;
     height: 90vh;
     align-items: center;
@@ -16,7 +15,7 @@
     font-size: 3rem;
   }
   
-  .services {
+  .settings {
     background-image: url('./static/image/img-2.jpg');
     background-position: center;
     background-size: cover;
@@ -25,7 +24,7 @@
     font-size: 100px;
   }
   
-  .products {
+  .settings {
     background-image: url('./static/image/img-3.jpg');
     background-position: center;
     background-size: fill;
@@ -34,7 +33,7 @@
     font-size: 100px;
   }
   
-  .sign-up {
+  .log-in {
     background-image: url('./static/image/img-3.jpg');
     background-position: center;
     background-size: cover;

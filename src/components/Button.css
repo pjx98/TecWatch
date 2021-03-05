@@ -13,12 +13,12 @@
 
 .btn--primary{
     background-color: var(--primary);
-    color: #242424;
+    color: #fff;
     border: 1px solid var(--primary);
 }
 
 .btn--outline{
-    background-color: transparent;
+    background-color: #f7ba5b;
     color: #fff; /* text colour white */
     padding: 8px 20px;
     border: 1px solid var(--primary);
