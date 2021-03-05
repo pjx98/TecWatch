@@ -16,9 +16,9 @@ function Cards() {
                             path='/view-all-tenants'
                             />
                             <CardItem 
-                            src="images/reports.png"
+                            src="images/unresolvedreports.png"
                             text="View All Reports"
-                            label='Sorted by: Time'
+                            label='Sorted by: Latest'
                             path='/view-all-reports'
                             />
                     </ul>
@@ -32,9 +32,9 @@ function Cards() {
                             />
                             <CardItem 
                             src="images/reports.png"
-                            text="View All Reports"
-                            label='Sorted by: Time'
-                            path='/view-all-reports'
+                            text="View Unresolved Rectifications"
+                            label='Sorted by: Latest'
+                            path='/view-unresolved-reports'
                             />
                     </ul>
 
