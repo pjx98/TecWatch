@@ -14,6 +14,7 @@ urlpatterns = [
     path('homestaff/', views.homestaff),
     path('hometenant/', views.hometenant),
     url('favicon.ico', RedirectView.as_view(url = '/media/images/')),
+    
 ]
 
 

@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .forms import Complaint_Form
 from .models import Complaint
+from .serializer import ComplaintSerializer
 
 # Create your views here.
 def home(request):
@@ -38,5 +39,13 @@ def homestaff(request):
 def hometenant(request):
     complaints = Complaint.objects.all()
     return render(request, 'home_tenant.html', {'complaints': complaints})
+
+
+
+def get_complaint_list(request):
+    if request.method =="GET":
+        complaint_list = Complaint.objects.all()
+        serializer = ComplaintSerializer(complaint_list, many=True)
+        return JsonResponse(serializer.data, safe=False)
     
 
