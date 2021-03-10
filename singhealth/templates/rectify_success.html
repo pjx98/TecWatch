@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rectification submitted successfully</title>
+    <link rel="stylesheet" href="C:/Users/minxuan/tecwatch/tecwatch/src/App.css">
+    
+</head>
+    
+<body>
+<center>
+    <h1>Rectification is successfully submitted on {{complaint.date_created}}</h1>
+    <h2>Complaint lodged: {{complaint.subject}}</h2>
+    
+    <p>
+        Given deadline: {{complaint.deadline}} <br>
+        Score: {{complaint.score}} <br>
+        Uploaded Picture: <br>
+        <img src="{{complaint.picture.url}}" width = "200px" height="200px"> <br>
+        Suggestions: {{complaint.suggestions}} <br><hr>
+
+    </p>
+    
+    <h2>Your response</h2>
+    
+    <p>
+        Your comments: {{complaint.tenant_response}} <br>
+        Uploaded Picture: <br>
+        <img src="{{complaint.tenant_picture.url}}" width = "200px" height="200px"> <br>
+    
+    </p>
+    
+    <button type="button"><a href="/singhealth/hometenant">Return Home</a></button>
+    
+    
+</center>
+    
+    
+    
+</body>
+</html>

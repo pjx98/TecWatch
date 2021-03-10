@@ -8,11 +8,13 @@ from django.conf.urls import url
 urlpatterns = [
     path('home/', views.home),
     path('create/', views.create_complaint),
-    path('viewall/', views.view_all),
     path('success/', views.create_success),
     path('login/', views.login),
     path('homestaff/', views.homestaff),
     path('hometenant/', views.hometenant),
+    path('rectify/', views.upload_rectification),
+    path('rectifysuccess/', views.rectify_success),
+    path('viewtenant/', views.view_tenant),
     url('favicon.ico', RedirectView.as_view(url = '/media/images/')),
     
 ]

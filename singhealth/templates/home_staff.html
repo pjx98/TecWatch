@@ -8,26 +8,81 @@
     
 <body>
 <center>
-    <h1>Welcome Staff!</h1><br>
+    <button type="button"><a href="/singhealth/login">Log Out</a></button>
+    <br><br>
+    <h1>Welcome {{staff.name}}!</h1><br>
     <h2>You can create a new complaint or view all complaints you have made</h2><br><br>
     
-    <button type="button"><a href="/singhealth/create">Create a new complaint</a></button>
-    <br><br><br><br><br>
+    <form action = "/singhealth/create/" method="POST" id = "idForm" enctype="multipart/form-data">
+        {% csrf_token %}
+        <button type="submit" name="staffid" value={{staff.username}} form="idForm">Create a new complaint</button>
+    </form>
     
-    <h2>Your complaints:</h2> <br>
+    <br><br><br>
+    
+    <h2>All Tenants:</h2><br>
+    
+    {% for t in tenants %}
+    Name: {{t.name}}<br>
+    Outlet: {{t.outlet}}<br> 
+    <form action = "/singhealth/viewtenant/" method="POST" id="viewTenantForm" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="staffId" value={{staff.username}} form="viewTenantForm"/>
+        <button type="submit" name="tenantId" value={{t.username}} form="viewTenantForm">View related complaints</button>        
+    </form> <br><br>
+    
+    {% empty %}
+    There are no tenants registered
+    
+    
+    <br> <br>
+    {% endfor %}
+    <hr>
+    
+    <h2>Your complaints:</h2>
     
     <p>
         
                 {% for com in complaints %}
-                Title: {{com.title}} <br>
+                Subject: {{com.subject}} <br>
+                Tenant Involved: {{com.tenant.name}} <br>
+                Complaint id: {{com.id}}<br>
                 Created on: {{com.date_created}} <br>
                 Given deadline: {{com.deadline}} <br>
                 Score: {{com.score}} <br>
                 Uploaded Picture: <br>
-                <img src="{{com.picture.url}}" height = "200px" width="200px"> <br>
+                <img src="{{com.picture.url}}" height = "200px" width="200px"><br>
                 Suggestions: {{com.suggestions}} <br>
-                Notes: {{com.notes}} <br> <hr>
+                Notes: {{com.notes}} <br><br>
+                        
+                {% if com.tenant_response != "" %}
+                Tenant Response: {{com.tenant_response}}<br>
+                Uploaded Picture:<br> 
+                <img src="{{com.tenant_picture.url}}" height = "200px" width = "200px"> <br>
+        
+                    {% if com.status == "Resolved" %}
+                    Status: {{com.status}} <br>  
+        
+                    {% else %}
+                    <form action = "/singhealth/homestaff/" method="POST" id="resolveForm" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <button type="submit" name="resolveid" value={{com.id}} form="resolveForm">Resolve</button> <br>
+
+                    </form>
+                    {% endif %}
+        
+                
+                {% else %}
+                    Status: {{com.status}} <br>
+                {% endif %}
+    
+                <hr>
+    
+                {% empty %}
+                You have not made any complaints
+    
                 {% endfor %}
+                
 
     </p>
     

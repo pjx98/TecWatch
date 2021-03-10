@@ -8,20 +8,46 @@
     
 <body>
 <center>
-    <h1>Welcome Tenant! Here is a list of complaints made against you:</h1>
+    <button type="button"><a href="/singhealth/login">Log Out</a></button>
+    <br><br>
+    <h1>Welcome {{tenant.name}}! <br> Here is a list of complaints made against you: <br></h1>
     
     <p>
         
+        
                 {% for com in complaints %}
-                Title: {{com.title}} <br>
+                Subject: {{com.subject}} <br>
+                Complaint id: {{com.id}} <br>
                 Created on: {{com.date_created}} <br>
                 Given deadline: {{com.deadline}} <br>
                 Score: {{com.score}} <br>
                 Uploaded Picture: <br>
                 <img src="{{com.picture.url}}" height = "200px" width="200px"> <br>
-                Suggestions: {{com.suggestions}} <br>
-                Notes: {{com.notes}} <br> <hr>
+                Suggestions provided: {{com.suggestions}} <br> <br>
+        
+        
+                {% if com.tenant_response != "" %}
+                
+                Your Response: {{com.tenant_response}}<br>
+                Uploaded Picture:<br> 
+                <img src="{{com.tenant_picture.url}}" height = "200px" width = "200px"> <br>
+                Status: {{com.status}} <br>
+        
+                {% else %}
+                <form action = "/singhealth/hometenant/" method="POST" id="idForm" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <button type="submit" name="complaintid" value={{com.id}} form="idForm">Upload Rectification</button>               
+                </form>
+                
+                {% endif %}
+                <br><hr>
+    
+    
+                {% empty %}
+                There are currently no complaints
+    
                 {% endfor %}
+    
 
     </p>
     

@@ -11,9 +11,18 @@
     <h1>Welcome!<br></h1>
     <h2>What is your account type?<br></h2>
     
-    <button type="button"><a href="/singhealth/homestaff">Staff</a></button>
-    <br><br><br><br><br>
-    <button type="button"><a href="/singhealth/hometenant">Tenant</a></button>
+    <form action = "/singhealth/homestaff/" method="POST" id="loginStaff" enctype="multipart/form-data">
+        {% csrf_token %}
+        <button type="submit" name="loginId" value="singhealth" form="loginStaff">Login as Singhealth (Staff)</button> <br><br>     
+        <button type="submit" name="loginId" value="staff_2" form="loginStaff">Login as Staff2 (Staff)</button> <br><br>            
+    </form>
+    
+    <form action = "/singhealth/hometenant/" method="POST" id="loginTenant" enctype="multipart/form-data">
+        {% csrf_token %}       
+        <button type="submit" name="loginId" value="happy_ice" form="loginTenant">Login as Happy_ice (Tenant)</button> <br><br>         
+        <button type="submit" name="loginId" value="tenant1" form="loginTenant">Login as Tenant1 (Tenant)</button> <br><br>         
+    </form>
+    
     
     
     

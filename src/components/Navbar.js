@@ -5,15 +5,15 @@ import './Navbar.css';
 
 function Navbar() {
     const [click, setClick] = useState(false); 
-    const [button, setButton]=useState(true);
+    const [button, setButton]= useState(true);
 
 
     const handleClick = () => setClick(!click); 
     // NOT click to be opposite to the false state setting above
 
-    const closeMobileMenu=()=>setClick(false);
+    const closeMobileMenu = () => setClick(false);
 
-    const showButton=()=>{
+    const showButton = () =>{
         if(window.innerWidth<=960){
             setButton(false);
         } else{
@@ -28,7 +28,7 @@ function Navbar() {
             <nav className="navbar">
                 <div className="navbar-container">
                     <Link to="/" className="navbar-logo">
-                        TECWATCH <i className="fab fa-typo3"></i>
+                        TecWatch <i className="fab fa-typo3"></i>
                     </Link>
                     <div className="menu-icon" onClick={handleClick}>
                         {/* create a new function handleClick that will enable us t click the menu icon */}
@@ -48,12 +48,12 @@ function Navbar() {
                     </li>
                     <li className='nav-item'>
                         <Link to='/log-in' className='nav-links-mobile' onClick={closeMobileMenu}>
-                            Log In
+                            Log Out
                         </Link>
                     </li>
                     </ul>
-                    {button && <Button buttonStyle='btn--outline'>LOG IN</Button>} 
-                    {/* 'SIGNUP' is the children being passed in*/}
+                    {button && <Button buttonStyle='btn--outline'>LOG OUT</Button>} 
+                    {/* 'LOG OUT' is the children being passed in*/}
                 </div>
             </nav>
         </>

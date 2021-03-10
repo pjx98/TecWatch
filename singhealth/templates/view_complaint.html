@@ -1,27 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>View all Complaints</title>
+    <title>{{ tenant.name }}</title>
     <link rel="stylesheet" href="C:/Users/minxuan/tecwatch/tecwatch/src/App.css">
     
 </head>
     
 <body>
 <center>
-    <h1>View all Complaints</h1>
+    <h1>{{ tenant.name }} </h1>
+    <h2>Complaints you have made against {{ tenant.name }}: </h2>
     
     <p>
         
                 {% for com in complaints %}
-                Title: {{com.title}} <br>
+                Subject: {{com.subject}} <br>
                 Created on: {{com.date_created}} <br>
                 Given deadline: {{com.deadline}} <br>
                 Score: {{com.score}} <br>
-                Uploaded Picture: <br>
+                Your Uploaded Picture: <br>
                 <img src="{{com.picture.url}}" height = "200px" width="200px"> <br>
                 Suggestions: {{com.suggestions}} <br>
-                Notes: {{com.notes}} <br> <hr>
+                Notes: {{com.notes}} <br><br>
+        
+                {% if com.tenant_response != "" %}
+                Tenant Response: {{com.tenant_response}}<br>
+                Uploaded Picture:<br> 
+                <img src="{{com.tenant_picture.url}}" height = "200px" width = "200px"> <br>
+        
+                    {% if com.status == "Resolved" %}
+                    Status: {{com.status}} <br>  
+        
+                    {% else %}
+                    <form action = "/singhealth/homestaff/" method="POST" id="resolveForm" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <button type="submit" name="resolveid" value={{com.id}} form="resolveForm">Resolve</button> <br>
+
+                    </form>
+                    {% endif %}
+        
+                
+                {% else %}
+                    Status: {{com.status}} <br>
+                {% endif %}
+    
+                <hr>
+    
+    
+                {% empty %}
+                You have not made any complaints against {{ tenant.name }}
+                
                 {% endfor %}
+    
+    
 
     </p>
     
