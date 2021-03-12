@@ -51,10 +51,21 @@
                 You have not made any complaints against {{ tenant.name }}
                 
                 {% endfor %}
-    
-    
+
 
     </p>
+    
+    <form action = "/singhealth/homestaff/" method="POST" id = "idForm" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+        
+            {{ form.as_table }}
+        
+        </table>
+        <button type="submit" name="loginId" value={{staff.username}} form="idForm">Return Home</button>  
+    
+    
+    </form> 
     
     
 </center>

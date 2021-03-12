@@ -2,8 +2,13 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from .forms import Complaint_Form, Rectification_Form
 from .models import Complaint, Tenant, Staff, Outlet
-from .serializer import ComplaintSerializer
 from django.utils import timezone
+
+from .serializer import ComplaintSerializer
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 def home(request):
@@ -23,10 +28,11 @@ def create_complaint(request):
             if form.is_valid():
                 complaint = form.save(commit=False)
                 complaint.status = 'Pending Tenant Response'
-                staffUsername = request.POST.get('staffUsername', -1)
+                staffUsername = request.POST.get('userId', -1)
                 complaint.staff = Staff.objects.get(username = staffUsername)
                 complaint.save()
                 return redirect('/singhealth/success')
+            
     return render(request, 'error.html')
 
 def create_success(request):
@@ -47,13 +53,13 @@ def homestaff(request):
             staff = complaint.staff
             
         except:
-            loginId = request.POST.get('loginId', 0)
+            loginId = request.POST.get('loginId', -1)
             staff = Staff.objects.get(username = loginId)
             
         context['staff'] = staff    
         tenants = Tenant.objects.all()
         context['tenants'] = tenants
-        complaints = Complaint.objects.filter(staff = staff)
+        complaints = Complaint.objects.filter(staff = staff).order_by('date_created')[::-1]
         context['complaints'] = complaints
         
         return render(request, 'home_staff.html', context)    
@@ -74,7 +80,7 @@ def hometenant(request):
             loginId = request.POST.get('loginId', 0)
             tenant = Tenant.objects.get(username = loginId)
             context['tenant'] = tenant
-            complaints = Complaint.objects.filter(tenant = tenant)
+            complaints = Complaint.objects.filter(tenant = tenant).order_by('date_created')[::-1]
             context['complaints'] = complaints
             return render(request, 'home_tenant.html', context)    
     
@@ -107,8 +113,19 @@ def upload_rectification(request):
     
     
 def rectify_success(request):
-    complaint = Complaint.objects.last()
-    return render(request, 'rectify_success.html', {'complaint': complaint,})
+    if request.method == 'POST':
+        form = Rectification_Form(request.POST, request.FILES)
+        if form.is_valid():
+            rec = form.save(commit = False)
+            complaintid = request.POST.get('complaintid', -1)
+            complaint = Complaint.objects.get(id = complaintid) 
+            complaint.tenant_response = rec.tenant_response
+            complaint.tenant_picture = rec.tenant_picture
+            complaint.status = 'Pending Staff Response'
+            complaint.save()
+            return render(request, 'rectify_success.html', {'complaint': complaint})
+        
+    return render(request, 'error.html')
 
 
 def view_tenant(request):
@@ -118,10 +135,15 @@ def view_tenant(request):
         staffId = request.POST.get('staffId', -1)
         tenant = Tenant.objects.get(username = tenantId)
         staff = Staff.objects.get(username = staffId)
-        complaints = Complaint.objects.filter(staff = staff, tenant = tenant)
+        complaints = Complaint.objects.filter(staff = staff, tenant = tenant).order_by('date_created')[::-1]
         context['tenant'] = tenant
         context['complaints'] = complaints
+        context['staff'] = staff
         return render(request, 'view_complaint.html', context)
         
     return render(request, 'error.html')
+
+
+
+
 

@@ -4,6 +4,9 @@ from tecwatch import settings
 from django.conf.urls.static import static
 from django.views.generic import RedirectView
 from django.conf.urls import url
+from rest_framework import routers
+from .api import ComplaintViewSet
+
 
 urlpatterns = [
     path('home/', views.home),
@@ -18,6 +21,8 @@ urlpatterns = [
     url('favicon.ico', RedirectView.as_view(url = '/media/images/')),
     
 ]
+
+
 
 
 if settings.DEBUG:

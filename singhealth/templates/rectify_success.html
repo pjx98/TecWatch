@@ -29,7 +29,17 @@
     
     </p>
     
-    <button type="button"><a href="/singhealth/hometenant">Return Home</a></button>
+    <form action = "/singhealth/hometenant/" method="POST" id = "idForm" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+        
+            {{ form.as_table }}
+        
+        </table>
+        <button type="submit" name="loginId" value={{complaint.tenant.username}} form="idForm">Return Home</button>  
+    
+    
+    </form> 
     
     
 </center>
