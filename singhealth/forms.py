@@ -1,35 +1,47 @@
 from django import forms
-from .models import Complaint
+from .models import Complaint, Update
 
 #DataFlair #File_Upload
 class Complaint_Form(forms.ModelForm):
     class Meta:
         model = Complaint
-        fields = [            
-        'tenant',
-        'subject',
+        fields = [     
         'score',
-        'picture',
         'deadline',
-        'suggestions',
         'notes',
         ]
 
         
+
         
-class Rectification_Form(forms.ModelForm):
+class Update_Form(forms.ModelForm):
     class Meta:
-        model = Complaint
+        model = Update
         fields = [
-        'tenant_response',
-        'tenant_picture',
+            'subject',
+            'photo',
+            'comments',
+            
         ]
         
         labels = {
-            'tenant_response' : "Your response",
-            'tenant_picture' : "Upload picture"
+            'photo' : "Upload picture"
         }
         
+        
+class Complaint_Tenant(forms.ModelForm):
+    class Meta:
+        model = Complaint
+        fields = [
+            'tenant',
+        ]
+        
+class Complaint_Notes(forms.ModelForm):
+    class Meta:
+        model = Complaint
+        fields = [
+            'notes'
+        ]
         
 
 

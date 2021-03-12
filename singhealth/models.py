@@ -6,7 +6,7 @@ class Staff(models.Model):
     name = models.CharField(max_length = 100, null=True)
     username = models.CharField(max_length = 100, null=True)
     email = models.CharField(max_length = 100, null=True)
-    date_created = models.DateTimeField(auto_now_add = True, null=True)
+    date_created = models.DateTimeField(default = timezone.now, null=True)
 
     def __str__(self):
         return self.name
@@ -34,38 +34,44 @@ class Tenant(models.Model):
     name = models.CharField(max_length = 100, null=True)
     username = models.CharField(max_length = 100, null=True)
     email = models.CharField(max_length = 100, null=True)
-    date_created = models.DateTimeField(auto_now_add = True, null=True)
-    outlet = models.ForeignKey(Outlet, null=True, on_delete = models.SET_NULL)
+    date_created = models.DateTimeField(default = timezone.now, null=True)
+    outlet = models.ForeignKey(Outlet, null=True, on_delete = models.CASCADE)
 
     def __str__(self):
         return self.name
 
 class Complaint(models.Model):
     STATUS = (
-        ('Pending Tenant Response', 'Pending Tenant Response'), 
-        ('Pending Staff Response', 'Pending Staff Response'),
+        ('Open', 'Open'),
+        ('Expired', 'Expired'),
         ('Resolved', 'Resolved'),
     )
     
-    
     subject = models.CharField(max_length = 100, null=True)
-    date_created = models.DateTimeField(default= timezone.now, null=True)
     score = models.PositiveIntegerField(null = True)
-    picture = models.ImageField(null=True)
     deadline = models.DateField(help_text="YYYY-MM-DD", null=True)
-    suggestions = models.TextField(null=True, help_text ="**Shown to tenant")
+    date_created = models.DateTimeField(default = timezone.now, null=True)
     notes = models.TextField(null=True, help_text = "**Not visible to tenant")
-    tenant_response = models.TextField(null=True, default= "")
-    tenant_picture = models.ImageField(null=True)
     status = models.CharField(max_length = 100, null=True, choices = STATUS)
     
-    
-
-    staff = models.ForeignKey(Staff, null=True, on_delete = models.SET_NULL)
-    tenant = models.ForeignKey(Tenant, null=True, on_delete = models.SET_NULL)
+    staff = models.ForeignKey(Staff, null=True, on_delete = models.CASCADE)
+    tenant = models.ForeignKey(Tenant, null=True, on_delete = models.CASCADE)
 
     def __str__(self):
-        return self.subject + " created on " + str(self.date_created)
+        return str(self.id)
+    
+    
+class Update(models.Model):
+    subject = models.CharField(max_length = 100, null=True)
+    date = models.DateTimeField(default = timezone.now, null=True)
+    comments = models.TextField(null=True)
+    photo = models.ImageField(null=True)
+    complaint = models.ForeignKey(Complaint, null=True, on_delete = models.CASCADE)
+    edit_name = models.CharField(max_length = 100, null=True)
+    
+    def __str__(self):
+        return "response to complaint " + str(self.complaint.id)
+    
     
 
     

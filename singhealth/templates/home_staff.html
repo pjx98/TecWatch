@@ -15,7 +15,7 @@
     
     <form action = "/singhealth/create/" method="POST" id = "idForm" enctype="multipart/form-data">
         {% csrf_token %}
-        <button type="submit" name="staffid" value={{staff.username}} form="idForm">Create a new complaint</button>
+        <button type="submit" name="staffId" value={{staff.username}} form="idForm">Create a new complaint</button>
     </form>
     
     <br><br><br>
@@ -44,38 +44,17 @@
     <p>
         
                 {% for com in complaints %}
-                Subject: {{com.subject}} <br>
-                Tenant Involved: {{com.tenant.name}} <br>
                 Complaint id: {{com.id}}<br>
-                Created on: {{com.date_created}} <br>
-                Given deadline: {{com.deadline}} <br>
-                Score: {{com.score}} <br>
-                Uploaded Picture: <br>
-                <img src="{{com.picture.url}}" height = "200px" width="200px"><br>
-                Suggestions: {{com.suggestions}} <br>
-                Notes: {{com.notes}} <br><br>
-                        
-                {% if com.tenant_response != "" %}
-                Tenant Response: {{com.tenant_response}}<br>
-                Uploaded Picture:<br> 
-                <img src="{{com.tenant_picture.url}}" height = "200px" width = "200px"> <br>
-        
-                    {% if com.status == "Resolved" %}
-                    Status: {{com.status}} <br>  
-        
-                    {% else %}
-                    <form action = "/singhealth/homestaff/" method="POST" id="resolveForm" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <button type="submit" name="resolveid" value={{com.id}} form="resolveForm">Resolve</button> <br>
-
-                    </form>
-                    {% endif %}
-        
+                Tenant Involved: {{com.tenant.name}} <br>
+                Subject: {{com.subject}} <br>
+                Status: {{com.status}} <br>  
                 
-                {% else %}
-                    Status: {{com.status}} <br>
-                {% endif %}
-    
+                <form action = "/singhealth/viewcomplaint/" method="POST" id="viewComplaintForm" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="identity" value="staff" form="viewComplaintForm"/>
+                <button type="submit" name="complaintId" value={{com.id}} form="viewComplaintForm">View more details</button>        
+                </form> <br><br>
+        
                 <hr>
     
                 {% empty %}

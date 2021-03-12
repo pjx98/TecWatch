@@ -12,11 +12,19 @@
     <form action = "/singhealth/create/" method="POST" id = "complaintForm" enctype="multipart/form-data">
         {% csrf_token %}
         <table>
+            
+            {{ form_complaint1.as_table }}
+            
+            {{ form_update.as_table}}
         
-            {{ form.as_table }}
+            {{ form_complaint2.as_table }}
+            
+            
         
         </table>
-        <button type="submit" name="userId" value={{staff.username}} form="complaintForm">Submit Complaint</button>  
+        <br>
+        <br>
+        <button type="submit" name="userId" value= {{ staff.username }} form="complaintForm">Submit Complaint</button>  
     
     
     </form>

@@ -1,71 +1,86 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ tenant.name }}</title>
+    <title>View Complaint Details</title>
     <link rel="stylesheet" href="C:/Users/minxuan/tecwatch/tecwatch/src/App.css">
     
 </head>
     
 <body>
 <center>
-    <h1>{{ tenant.name }} </h1>
-    <h2>Complaints you have made against {{ tenant.name }}: </h2>
+    {% if identity == "staff" %}
+    
+    <form action = "/singhealth/homestaff/" method="POST" id = "idForm" enctype="multipart/form-data">
+        {% csrf_token %}
+        <button type="submit" name="loginId" value={{complaint.staff.username}} form="idForm">Return Home</button> 
+    
+    </form> 
+    
+    {% elif identity == "tenant" %}
+    <form action = "/singhealth/hometenant/" method="POST" id = "idForm" enctype="multipart/form-data">
+        {% csrf_token %}
+        <button type="submit" name="loginId" value={{complaint.tenant.username}} form="idForm">Return Home</button>
+    </form>
+    
+    {% endif %}
+    
+    <br><br>
+
+    
+    <h1>{{ complaint.subject }} </h1>
     
     <p>
-        
-                {% for com in complaints %}
-                Subject: {{com.subject}} <br>
-                Created on: {{com.date_created}} <br>
-                Given deadline: {{com.deadline}} <br>
-                Score: {{com.score}} <br>
-                Your Uploaded Picture: <br>
-                <img src="{{com.picture.url}}" height = "200px" width="200px"> <br>
-                Suggestions: {{com.suggestions}} <br>
-                Notes: {{com.notes}} <br><br>
-        
-                {% if com.tenant_response != "" %}
-                Tenant Response: {{com.tenant_response}}<br>
-                Uploaded Picture:<br> 
-                <img src="{{com.tenant_picture.url}}" height = "200px" width = "200px"> <br>
-        
-                    {% if com.status == "Resolved" %}
-                    Status: {{com.status}} <br>  
-        
-                    {% else %}
-                    <form action = "/singhealth/homestaff/" method="POST" id="resolveForm" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <button type="submit" name="resolveid" value={{com.id}} form="resolveForm">Resolve</button> <br>
-
-                    </form>
-                    {% endif %}
-        
-                
-                {% else %}
-                    Status: {{com.status}} <br>
+                {% if identity == "staff" %}
+                Tenant Involved: {{complaint.tenant.name}} <br>
                 {% endif %}
-    
+                Current Status: {{complaint.status}} <br>
+                Given Deadline: {{complaint.deadline}} <br>
+                Score: {{complaint.score}} <br>
+                {% if identity == "staff" %}
+                Notes: {{complaint.notes}} <br><br>
+                {% endif %}
+        
+                {% for u in updates %}
+                <b>Updated by: {{u.edit_name}}</b><br>
+                Subject: {{u.subject}} <br>
+                Date: {{u.date}}<br>
+                Uploaded Photo: <br>
+                <img src="{{u.photo.url}}" height = "200px" width="200px"> <br>
+                Comments: {{u.comments}} <br><br>
+
                 <hr>
-    
-    
-                {% empty %}
-                You have not made any complaints against {{ tenant.name }}
                 
                 {% endfor %}
 
 
     </p>
     
-    <form action = "/singhealth/homestaff/" method="POST" id = "idForm" enctype="multipart/form-data">
+        
+    
+    
+    {% if complaint.status != "Resolved" %}
+    
+        <form action = "/singhealth/update/" method="POST" id="updateForm" enctype="multipart/form-data">
         {% csrf_token %}
-        <table>
-        
-            {{ form.as_table }}
-        
-        </table>
-        <button type="submit" name="loginId" value={{staff.username}} form="idForm">Return Home</button>  
+        <input type="hidden" name="identity" value={{identity}} form="updateForm"/>
+        <button type="submit" name="updateid" value={{complaint.id}} form="updateForm">{{action}}</button>
+        </form>
     
     
-    </form> 
+        {% if identity == "staff" %}
+        
+        
+        <br><br>
+        <form action = "/singhealth/viewcomplaint/" method="POST" id="resolveForm" enctype="multipart/form-data">
+        {% csrf_token %}
+        <button type="submit" name="resolveid" value={{complaint.id}} form="resolveForm">Resolve Complaint</button>
+        </form>
+
+        
+        {% endif %}
+    
+    {% endif %}
+     
     
     
 </center>

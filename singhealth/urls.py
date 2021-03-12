@@ -15,9 +15,12 @@ urlpatterns = [
     path('login/', views.login),
     path('homestaff/', views.homestaff),
     path('hometenant/', views.hometenant),
-    path('rectify/', views.upload_rectification),
-    path('rectifysuccess/', views.rectify_success),
     path('viewtenant/', views.view_tenant),
+    path('viewcomplaint/', views.view_complaint),
+    path('update/', views.update),
+    path('updatesuccess/', views.update_success),
+    path('successstaff/', views.success_staff),
+    path('successtenant/', views.success_tenant),
     url('favicon.ico', RedirectView.as_view(url = '/media/images/')),
     
 ]

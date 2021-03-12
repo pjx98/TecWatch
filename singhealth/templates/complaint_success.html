@@ -16,19 +16,14 @@
         Given deadline: {{complaint.deadline}} <br>
         Score: {{complaint.score}} <br>
         Uploaded Picture: <br>
-        <img src="{{complaint.picture.url}}" width = "200px" height="200px"> <br>
-        Suggestions: {{complaint.suggestions}} <br>
+        <img src="{{update.photo.url}}" width = "200px" height="200px"> <br>
+        Suggestions: {{update.comments}} <br>
         Notes: {{complaint.notes}} <br> <hr>
 
     </p>
     
     <form action = "/singhealth/homestaff/" method="POST" id = "idForm" enctype="multipart/form-data">
         {% csrf_token %}
-        <table>
-        
-            {{ form.as_table }}
-        
-        </table>
         <button type="submit" name="loginId" value={{complaint.staff.username}} form="idForm">Return Home</button>  
     
     

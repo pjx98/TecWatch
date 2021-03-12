@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{action}} submitted successfully</title>
+    <link rel="stylesheet" href="C:/Users/minxuan/tecwatch/tecwatch/src/App.css">
+    
+</head>
+    
+<body>
+<center>
+    <h1>{{action}} of complaint is successful! You may return to the home page</h1>
+    
+    {% if identity == "staff" %}
+    
+    
+    <form action = "/singhealth/homestaff/" method="POST" id = "idForm" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <button type="submit" name="loginId" value={{userId}} form="idForm">Return Home</button>  
+    
+    
+    </form> 
+    
+    {% elif identity == "tenant" %}
+    <form action = "/singhealth/hometenant/" method="POST" id = "idForm" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <button type="submit" name="loginId" value={{userId}} form="idForm">Return Home</button>  
+    
+    
+    </form> 
+    {% endif %}
+    
+    
+    
+</center>
+    
+    
+    
+</body>
+</html>
