@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{ tenant.name }}</title>
+    <title>{{ tenant.username }}</title>
     <link rel="stylesheet" href="C:/Users/minxuan/tecwatch/tecwatch/src/App.css">
     
 </head>
     
 <body>
 <center>
-    <h1>{{ tenant.name }} </h1>
-    <h2>Complaints you have made against {{ tenant.name }}: </h2>
+    <h1>{{ tenant.username }} </h1>
+    <h2>Complaints you have made against {{ tenant.username }}: </h2>
     
     <p>
         
                 {% for com in complaints %}
                 Complaint id: {{com.id}}<br>
-                Tenant Involved: {{com.tenant.name}} <br>
+                Tenant Involved: {{com.tenant.username}} <br>
                 Subject: {{com.subject}} <br>
                 Status: {{com.status}} <br>  
                 

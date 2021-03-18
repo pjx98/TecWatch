@@ -8,23 +8,25 @@
     
 <body>
 <center>
-    <button type="button"><a href="/singhealth/login">Log Out</a></button>
+    <button type="button"><a href={% url 'logout' %}>Log Out</a></button>
     <br><br>
-    <h1>Welcome {{staff.name}}!</h1><br>
+    <h1>Welcome {{staff}}!</h1><br>
     <h2>You can create a new complaint or view all complaints you have made</h2><br><br>
-    
+
+    <button type="button"><a href={% url 'create' %}>Create a new complaint</a></button>
+    <!--
     <form action = "/singhealth/create/" method="POST" id = "idForm" enctype="multipart/form-data">
         {% csrf_token %}
         <button type="submit" name="staffId" value={{staff.username}} form="idForm">Create a new complaint</button>
-    </form>
+    </form> -->
     
     <br><br><br>
     
     <h2>All Tenants:</h2><br>
     
     {% for t in tenants %}
-    Name: {{t.name}}<br>
-    Outlet: {{t.outlet}}<br> 
+    Name: {{t.username}}<br>
+    Outlet: {{t.groups.all.1.name}}<br> 
     <form action = "/singhealth/viewtenant/" method="POST" id="viewTenantForm" enctype="multipart/form-data">
         {% csrf_token %}
         <input type="hidden" name="staffId" value={{staff.username}} form="viewTenantForm"/>
