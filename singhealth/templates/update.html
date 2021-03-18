@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="C:/Users/minxuan/tecwatch/tecwatch/src/App.css">
+    
+</head>
+    
+<body>
+<center>
+    <h1>{{title}}: {{complaint.subject}} </h1>
+    <form action = "/singhealth/updatesuccess/" method="POST" id = "updateForm" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="identity" value={{identity}} form="updateForm"/>
+        <table>
+            
+            {{ form_update.as_table}}
+            {{ form_notes.as_table}}
+        
+        </table>
+        <br>
+        <br>
+        <button type="submit" name="comId" value= {{complaint.id}} form="updateForm">Update Complaint</button>  
+    
+    
+    </form>
+    
+    <h1>Past Details </h1>
+    
+    <p>
+                {% if identity == "staff" %}
+                Tenant Involved: {{complaint.tenant.name}} <br>
+                {% endif %}
+        
+                Current Status: {{complaint.status}} <br>
+                Given Deadline: {{complaint.deadline}} <br>
+                Score: {{complaint.score}} <br>
+        
+                {% if identity == "staff" %}
+                Notes: {{complaint.notes}} <br><br>
+                {% endif %}
+        
+                {% for u in updates %}
+                <b>Updated by: {{u.edit_name}}</b><br>
+                Subject: {{u.subject}} <br>
+                Date: {{u.date}}<br>
+                Uploaded Photo: <br>
+                <img src="{{u.photo.url}}" height = "200px" width="200px"> <br>
+                Comments: {{u.comments}} <br><br>
+
+                <hr>
+                
+                {% endfor %}
+
+
+    </p>
+    
+    
+    
+    
+</center>
+    
+    
+    
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tenant Homepage</title>
+    <link rel="stylesheet" href="C:/Users/minxuan/tecwatch/tecwatch/src/App.css">
+    
+</head>
+    
+<body>
+<center>
+    <button type="button"><a href="/singhealth/login">Log Out</a></button>
+    <br><br>
+    <h1>Welcome {{tenant.name}}! <br> Here is a list of complaints made against you: <br></h1>
+    
+    <p>
+        
+        
+                {% for com in complaints %}
+                Complaint id: {{com.id}}<br> 
+                Subject: {{com.subject}} <br>
+                Given Deadline: {{com.deadline}} <br>
+                Status: {{com.status}} <br>  
+                
+    
+                <form action = "/singhealth/viewcomplaint/" method="POST" id="viewComplaintForm" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="identity" value="tenant" form="viewComplaintForm"/>
+                <button type="submit" name="complaintId" value={{com.id}} form="viewComplaintForm">View more details</button>        
+                </form> <br><br>
+        
+                <hr>
+    
+                {% empty %}
+                There are currently no complaints
+    
+                {% endfor %}
+                
+    
+
+    </p>
+    
+    
+</center>
+    
+    
+    
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome</title>
+    <link rel="stylesheet" href="C:/Users/minxuan/tecwatch/tecwatch/src/App.css">
+    
+</head>
+    
+<body>
+<center>
+    <h1>Welcome!<br></h1>
+    <h2>What is your account type?<br></h2>
+    
+    <form action = "/singhealth/homestaff/" method="POST" id="loginStaff" enctype="multipart/form-data">
+        {% csrf_token %}
+        <button type="submit" name="loginId" value="singhealth" form="loginStaff">Login as Singhealth (Staff)</button> <br><br>     
+        <button type="submit" name="loginId" value="staff_2" form="loginStaff">Login as Staff2 (Staff)</button> <br><br>            
+    </form>
+    
+    <form action = "/singhealth/hometenant/" method="POST" id="loginTenant" enctype="multipart/form-data">
+        {% csrf_token %}       
+        <button type="submit" name="loginId" value="happy_ice" form="loginTenant">Login as Happy_ice (Tenant)</button> <br><br>         
+        <button type="submit" name="loginId" value="tenant1" form="loginTenant">Login as Tenant1 (Tenant)</button> <br><br>         
+    </form>
+    
+    
+    
+    
+    
+</center>
+    
+    
+    
+</body>
+</html>

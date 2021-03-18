@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ tenant.username }}</title>
+    <link rel="stylesheet" href="C:/Users/minxuan/tecwatch/tecwatch/src/App.css">
+    
+</head>
+    
+<body>
+<center>
+    <h1>{{ tenant.username }} </h1>
+    <h2>Complaints you have made against {{ tenant.username }}: </h2>
+    
+    <p>
+        
+                {% for com in complaints %}
+                Complaint id: {{com.id}}<br>
+                Tenant Involved: {{com.tenant.username}} <br>
+                Subject: {{com.subject}} <br>
+                Status: {{com.status}} <br>  
+                
+                <form action = "/singhealth/viewcomplaint/" method="POST" id="viewComplaintForm" enctype="multipart/form-data">
+                {% csrf_token %}
+                <button type="submit" name="complaintId" value={{com.id}} form="viewComplaintForm">View more details</button>        
+                </form> <br><br>
+        
+                <hr>
+    
+                {% empty %}
+                You have not made any complaints
+    
+                {% endfor %}
+                
+
+    </p>
+    
+    
+    <form action = "/singhealth/homestaff/" method="POST" id = "idForm" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+        
+            {{ form.as_table }}
+        
+        </table>
+        <button type="submit" name="loginId" value={{staff.username}} form="idForm">Return Home</button>  
+    
+    
+    </form> 
+    
+    
+</center>
+    
+    
+    
+</body>
+</html>
