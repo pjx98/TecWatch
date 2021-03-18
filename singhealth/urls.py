@@ -10,11 +10,11 @@ from .api import ComplaintViewSet
 
 urlpatterns = [
     path('home/', views.home),
-    path('create/', views.create_complaint),
-    path('success/', views.create_success),
-    path('login/', views.login),
-    path('homestaff/', views.homestaff),
-    path('hometenant/', views.hometenant),
+    path('create/', views.create_complaint, name="create"),
+    # path('success/', views.create_success),
+    #path('login/', views.login),
+    path('homestaff/', views.homestaff, name="homestaff"),
+    path('hometenant/', views.hometenant, name="hometenant"),
     path('viewtenant/', views.view_tenant),
     path('viewcomplaint/', views.view_complaint),
     path('update/', views.update),
@@ -22,6 +22,11 @@ urlpatterns = [
     path('successstaff/', views.success_staff),
     path('successtenant/', views.success_tenant),
     url('favicon.ico', RedirectView.as_view(url = '/media/images/')),
+    path('', views.loginPage, name="login"),  
+    path('logout/', views.logoutUser, name="logout"),
+    path('register/', views.registerPage, name="register"),
+    path('tenant/', views.tenant, name="tenant"),
+    path('staff/', views.staff, name="staff"),
     
 ]
 
