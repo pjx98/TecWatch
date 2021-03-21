@@ -1,91 +1,107 @@
 <!DOCTYPE html>
-<html>
+
 <head>
     <title>View Complaint Details</title>
-    <link rel="stylesheet" href="C:/Users/minxuan/tecwatch/tecwatch/src/App.css">
-    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+        integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <link rel='stylesheet' href="./assets/css/style.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
-    
+
 <body>
-<center>
-    {% if identity == "Staff" %}
-    
-    <form action = "/singhealth/homestaff/" method="POST" id = "idForm" enctype="multipart/form-data">
-        {% csrf_token %}
-        <button type="submit" name="loginId" value={{complaint.staff.username}} form="idForm">Return Home</button> 
-    
-    </form> 
-    
-    {% elif identity == "Tenant" %}
-    <form action = "/singhealth/hometenant/" method="POST" id = "idForm" enctype="multipart/form-data">
-        {% csrf_token %}
-        <button type="submit" name="loginId" value={{complaint.tenant.username}} form="idForm">Return Home</button>
-    </form>
-    
-    {% endif %}
-    
-    <br><br>
+    <div class="container h-100">
+        <div class="d-flex justify-content-center h-100">
+            <div class="user_card" style="width: 750px;">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        {% if identity == "Staff" %}
 
-    
-    <h1>{{ complaint.subject }} </h1>
-    
-    <p>
-                {% if identity == "Staff" %}
-                Tenant Involved: {{complaint.tenant.username}} <br>
-                {% endif %}
-                Current Status: {{complaint.status}} <br>
-                Given Deadline: {{complaint.deadline}} <br>
-                Score: {{complaint.score}} <br>
-                {% if identity == "Staff" %}
-                Notes: {{complaint.notes}} <br><br>
-                {% endif %}
-        
-                {% for u in updates %}
-                <b>Updated by: {{u.edit_name}}</b><br>
-                Subject: {{u.subject}} <br>
-                Date: {{u.date}}<br>
-                Uploaded Photo: <br>
-                <img src="{{u.photo.url}}" height = "200px" width="200px"> <br>
-                Comments: {{u.comments}} <br><br>
+                        <form action="/singhealth/homestaff/" method="POST" id="idForm" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary" name="loginId"
+                                value={{complaint.staff.username}} form="idForm">Return Home</button>
 
-                <hr>
-                
-                {% endfor %}
+                        </form>
+
+                        {% elif identity == "Tenant" %}
+                        <form action="/singhealth/hometenant/" method="POST" id="idForm" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary" name="loginId"
+                                value={{complaint.tenant.username}} form="idForm">Return Home</button>
+                        </form>
+
+                        {% endif %}
+                        <hr />
+                    </div>
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <h1>{{ complaint.subject }}/h1>
+
+                            </div>
+                            <div class="col-12 text-center">
+                                <p>
+                                    {% if identity == "Staff" %}
+                                    <b>Tenant Involved:</b> {{complaint.tenant.username}} <br>
+                                    {% endif %}
+                                    <b>Current Status:</b> {{complaint.status}} <br>
+                                    <b>Given Deadline:</b> {{complaint.deadline}} <br>
+                                    <b>Score:</b> {{complaint.score}} <br>
+                                    {% if identity == "Staff" %}
+                                    <b>Notes:</b> {{complaint.notes}} <br><br>
+                                    {% endif %}
+
+                                    {% for u in updates %}
+                                    <b>Updated by:</b> {{u.edit_name}}<br>
+                                    <b>Subject:</b> {{u.subject}} <br>
+                                    <b>Date:</b> {{u.date}}<br>
+                                    <b>Uploaded Photo:</b> <br>
+                                    <img src="{{u.photo.url}}" height="200px" width="200px"> <br>
+                                    <b>Comments:</b> {{u.comments}} <br><br>
+
+                                    <hr>
+
+                                    {% endfor %}
 
 
-    </p>
-    
-        
-    
-    
-    {% if complaint.status != "Resolved" %}
-    
-        <form action = "/singhealth/update/" method="POST" id="updateForm" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="hidden" name="identity" value={{identity}} form="updateForm"/>
-        <button type="submit" name="updateid" value={{complaint.id}} form="updateForm">{{action}}</button>
-        </form>
-    
-    
-        {% if identity == "Staff" %}
-        
-        
-        <br><br>
-        <form action = "/singhealth/viewcomplaint/" method="POST" id="resolveForm" enctype="multipart/form-data">
-        {% csrf_token %}
-        <button type="submit" name="resolveid" value={{complaint.id}} form="resolveForm">Resolve Complaint</button>
-        </form>
+                                </p>
+                            </div>
+                            <div class="col-12 text-center">
 
-        
-        {% endif %}
-    
-    {% endif %}
-     
-    
-    
-</center>
-    
-    
-    
+                                {% if complaint.status != "Resolved" %}
+
+                                <form action="/singhealth/update/" method="POST" id="updateForm"
+                                    enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="identity" value={{identity}} form="updateForm" />
+                                    <button type="submit" class="btn btn-primary" name="updateid" value={{complaint.id}}
+                                        form="updateForm">{{action}}</button>
+                                </form>
+
+
+                                {% if identity == "Staff" %}
+
+
+                                <br><br>
+                                <form action="/singhealth/viewcomplaint/" method="POST" id="resolveForm"
+                                    enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary" name="resolveid" value={{complaint.id}}
+                                        form="resolveForm">Resolve Complaint</button>
+                                </form>
+                                {% endif %}
+
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>

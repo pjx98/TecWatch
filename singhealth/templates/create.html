@@ -1,40 +1,47 @@
 <!DOCTYPE html>
-<html>
 <head>
     <title>Create Complaint</title>
-    <link rel="stylesheet" href="C:/Users/minxuan/tecwatch/tecwatch/src/App.css">
-    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+        integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <link rel='stylesheet' href="./assets/css/style.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
     
 <body>
-<center>
-    <h1>Create Complaint</h1>
-    <form action = "/singhealth/create/" method="POST" id = "complaintForm" enctype="multipart/form-data">
-        {% csrf_token %}
-        <table>
-            
-            {{ form_complaint1.as_table }}
-            
-            {{ form_update.as_table}}
-        
-            {{ form_complaint2.as_table }}
-            
-            
-        
-        </table>
-        <br>
-        <br>
-        <button type="submit" name="userId" value= {{ staff.username }} form="complaintForm">Submit Complaint</button>  
-    
-    
-    </form>
-    
-    
-    
-    
-</center>
-    
-    
-    
+    <div class="container h-100">
+        <div class="d-flex justify-content-center h-100">
+            <div class="user_card" style="width: 750px;">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <h1>Create Complaint</h1>
+                                <hr/>
+                            </div>
+                            <div class="col-12">
+                                <form action = "/singhealth/create/" method="POST" id = "complaintForm" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <table class="table">
+                                        {{ form_complaint1.as_table }}
+                                        
+                                        {{ form_update.as_table}}
+                                    
+                                        {{ form_complaint2.as_table }}
+                                    </table>
+                                    <br>
+                                </form>
+                            </div>
+                            <div class="col-12 text-center">
+                                <button type="submit" class="btn btn-success" name="userId" value= {{ staff.username }} form="complaintForm">Submit Complaint</button>  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
