@@ -30,6 +30,7 @@ from .decorators import *
 def home(request):
     return HttpResponse('Home Page')
 
+@login_required(login_url='login')
 def create_complaint(request):
     context = {}
 
@@ -80,10 +81,13 @@ def create_complaint(request):
 
 # def login(request):
 #     return render(request, 'login_buttons.html')
+
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Staff'])
 def homestaff(request):
     context = {}
+    identity = request.user.groups.all()[0].name
+    staff = request.user
     
     # loginId = request.POST.get('loginId', -1)
     # staff = Staff.objects.get(username = loginId)
@@ -91,7 +95,7 @@ def homestaff(request):
     # context['staff'] = staff    
     # tenants = Tenant.objects.all()
     # context['tenants'] = tenants
-    # complaints = Complaint.objects.filter(staff = staff).order_by('date_created')[::-1]
+    complaints = Complaint.objects.filter(staff = staff).order_by('date_created')[::-1]
     # context['complaints'] = complaints
 
     username = request.user.username
@@ -99,7 +103,7 @@ def homestaff(request):
     User = get_user_model()
     #users = User.objects.all()
     tenants = User.objects.filter(groups__name='Tenant')
-    complaints = Complaint.objects.all()
+    #complaints = Complaint.objects.all()
 
     context['staff'] = username
     context['tenants'] = tenants
@@ -110,23 +114,23 @@ def homestaff(request):
     
     
     
-    
+@login_required(login_url='login')
 def hometenant(request):
     context = {}
-    if request.method == 'POST':
-        
-        loginId = request.POST.get('loginId', 0)
-        tenant = Tenant.objects.get(username = loginId)
-        context['tenant'] = tenant
-        complaints = Complaint.objects.filter(tenant = tenant).order_by('date_created')[::-1]
-        context['complaints'] = complaints
-        return render(request, 'home_tenant.html', context)    
     
+    tenant = request.user
+    #loginId = request.POST.get('loginId', 0)
+    #tenant = Tenant.objects.get(username = loginId)
+    context['tenant'] = tenant
+    complaints = Complaint.objects.filter(tenant = tenant).order_by('date_created')[::-1]
+    context['complaints'] = complaints
+    return render(request, 'home_tenant.html', context)    
+
     return render(request, 'error.html')
 
 
 
-
+@login_required(login_url='login')
 def view_tenant(request):
     if request.method == "POST":
         context = {}
@@ -154,7 +158,7 @@ def view_tenant(request):
         return render(request, 'view_tenant.html', context)
         
     
-
+@login_required(login_url='login')
 def view_complaint(request):
     if request.method == "POST":
         context = {}
@@ -190,6 +194,7 @@ def view_complaint(request):
         
     return render(request, 'error.html')
 
+@login_required(login_url='login')
 def update(request):
     if request.method == "POST":
         context = {}
@@ -221,8 +226,10 @@ def update(request):
     
     return render(request, 'error.html')
 
+@login_required(login_url='login')
 def update_success(request):
     if request.method =="POST":
+        identity = request.user.groups.all()[0].name
         complaintId = request.POST.get('comId', -1)
         complaint = Complaint.objects.get(id=complaintId)
         update = Update_Form(request.POST, request.FILES)
@@ -232,13 +239,13 @@ def update_success(request):
         else: 
             return render(request, 'error.html')
         
-        identity = request.POST.get('identity', 0)
+        #identity = request.POST.get('identity', 0)
         
         
-        if identity == "staff":
+        if identity == "Staff":
             action = "Update"
             userId = complaint.staff.username
-            u.edit_name = complaint.staff.name
+            u.edit_name = complaint.staff.username
             u.save()
             notes = Complaint_Notes(request.POST, request.FILES)
             if notes.is_valid():
@@ -247,25 +254,27 @@ def update_success(request):
                 complaint.save()
                 return redirect('/singhealth/successstaff')
             
-        elif identity == "tenant":
+        elif identity == "Tenant":
             action = "Rectification"
             userId = complaint.tenant.username
-            u.edit_name = complaint.tenant.name
+            u.edit_name = complaint.tenant.username
             u.save()
             return redirect('/singhealth/successtenant')
             
     
     return render(request, 'error.html')
 
+@login_required(login_url='login')
 def success_staff(request):
     context = {}
     update = Update.objects.order_by('date')[::-1][0]
     userId = update.complaint.staff.username
     context['userId'] = userId
     context['action'] = "Update"
-    context['identity'] = "staff"
+    context['identity'] = identity = request.user.groups.all()[0].name
     return render(request, 'success.html', context)
 
+@login_required(login_url='login')
 def success_tenant(request):
     context = {}
     update = Update.objects.order_by('date')[::-1][0]
@@ -314,7 +323,7 @@ def loginPage(request):
 			if user.groups.filter (name='Staff'):
 				return redirect('homestaff')
 			elif user.groups.filter (name='Tenant'):
-				return redirect('tenant')
+				return redirect('hometenant')
 		else:
 			messages.info(request, 'Username OR password is incorrect')
 

@@ -10,7 +10,7 @@
 <center>
     <h1>{{action}} of complaint is successful! You may return to the home page</h1>
     
-    {% if identity == "staff" %}
+    {% if identity == "Staff" %}
     
     
     <form action = "/singhealth/homestaff/" method="POST" id = "idForm" enctype="multipart/form-data">
@@ -21,7 +21,7 @@
     
     </form> 
     
-    {% elif identity == "tenant" %}
+    {% elif identity == "Tenant" %}
     <form action = "/singhealth/hometenant/" method="POST" id = "idForm" enctype="multipart/form-data">
         {% csrf_token %}
         
