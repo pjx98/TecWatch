@@ -28,15 +28,15 @@
     <h1>Past Details </h1>
     
     <p>
-                {% if identity == "staff" %}
-                Tenant Involved: {{complaint.tenant.name}} <br>
+                {% if identity == "Staff" %}
+                Tenant Involved: {{complaint.tenant.username}} <br>
                 {% endif %}
         
                 Current Status: {{complaint.status}} <br>
                 Given Deadline: {{complaint.deadline}} <br>
                 Score: {{complaint.score}} <br>
         
-                {% if identity == "staff" %}
+                {% if identity == "Staff" %}
                 Notes: {{complaint.notes}} <br><br>
                 {% endif %}
         

@@ -8,7 +8,7 @@
     
 <body>
 <center>
-    {% if identity == "staff" %}
+    {% if identity == "Staff" %}
     
     <form action = "/singhealth/homestaff/" method="POST" id = "idForm" enctype="multipart/form-data">
         {% csrf_token %}
@@ -16,7 +16,7 @@
     
     </form> 
     
-    {% elif identity == "tenant" %}
+    {% elif identity == "Tenant" %}
     <form action = "/singhealth/hometenant/" method="POST" id = "idForm" enctype="multipart/form-data">
         {% csrf_token %}
         <button type="submit" name="loginId" value={{complaint.tenant.username}} form="idForm">Return Home</button>
@@ -30,13 +30,13 @@
     <h1>{{ complaint.subject }} </h1>
     
     <p>
-                {% if identity == "staff" %}
-                Tenant Involved: {{complaint.tenant.name}} <br>
+                {% if identity == "Staff" %}
+                Tenant Involved: {{complaint.tenant.username}} <br>
                 {% endif %}
                 Current Status: {{complaint.status}} <br>
                 Given Deadline: {{complaint.deadline}} <br>
                 Score: {{complaint.score}} <br>
-                {% if identity == "staff" %}
+                {% if identity == "Staff" %}
                 Notes: {{complaint.notes}} <br><br>
                 {% endif %}
         
@@ -67,7 +67,7 @@
         </form>
     
     
-        {% if identity == "staff" %}
+        {% if identity == "Staff" %}
         
         
         <br><br>

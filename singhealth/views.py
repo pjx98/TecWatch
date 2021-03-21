@@ -150,7 +150,7 @@ def view_tenant(request):
 
         context['tenant'] = tenant
         context['complaints'] = complaints
-        context['staff'] = staff
+        context['staff'] = request.user
         return render(request, 'view_tenant.html', context)
         
     
@@ -160,13 +160,14 @@ def view_complaint(request):
         context = {}
         
         
+        
         try:
+            identity = request.user.groups.all()[0].name
             complaintId = request.POST.get('complaintId', -1)
             complaint = Complaint.objects.get(id = complaintId)
-            identity = request.POST.get('identity', 0)
-            if identity == "staff":
+            if identity == "Staff":
                 action = "Upload more details"
-            elif identity == "tenant":
+            elif identity == "Tenant":
                 action = "Upload Rectification"            
             context['action'] = action
             
@@ -177,9 +178,9 @@ def view_complaint(request):
             complaint = Complaint.objects.get(id = complaintid)  
             complaint.status = 'Resolved' 
             complaint.save()
-            identity = "staff"
+            identity = "Staff"
             
-        
+        #context['action'] = action
         updates = Update.objects.filter(complaint = complaint)
         context['updates'] = updates
         context['complaint'] = complaint
@@ -192,19 +193,21 @@ def view_complaint(request):
 def update(request):
     if request.method == "POST":
         context = {}
-        identity = request.POST.get('identity', 0)
+        
+        identity = request.user.groups.all()[0].name
+        #identity = request.POST.get('identity', 0)
         complaintId = request.POST.get('updateid', -1)
         complaint = Complaint.objects.get(id = complaintId)
         form1 = Update_Form()
         updates = Update.objects.filter(complaint = complaint)
         
         
-        if identity == "staff":
+        if identity == "Staff":
             form2 = Complaint_Notes()
             context['form_notes'] = form2
             title = "Update Complaint"
         
-        elif identity == "tenant":
+        elif identity == "Tenant":
             title = "Upload Rectification"
 
         context['identity'] = identity
