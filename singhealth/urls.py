@@ -9,7 +9,6 @@ from .api import ComplaintViewSet
 
 
 urlpatterns = [
-    path('home/', views.home),
     path('create/', views.create_complaint),
     path('success/', views.create_success),
     path('login/', views.login),

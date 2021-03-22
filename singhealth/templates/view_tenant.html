@@ -21,6 +21,7 @@
                 
                 <form action = "/singhealth/viewcomplaint/" method="POST" id="viewComplaintForm" enctype="multipart/form-data">
                 {% csrf_token %}
+                <input type="hidden" name="identity" value="staff" form = "viewComplaintForm"/>
                 <button type="submit" name="complaintId" value={{com.id}} form="viewComplaintForm">View more details</button>        
                 </form> <br><br>
         

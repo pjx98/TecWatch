@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculate Score</title>
+    <link rel="stylesheet" href="C:/Users/minxuan/tecwatch/tecwatch/src/App.css">
+    
+</head>
+    
+<body>
+<center>
+    <h1>Calculate Score</h1>
+    <h2>Select relevant checklist</h2>
+    
+    <form action = "/checklist/calculate/" method="POST" id = "checklistForm" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <button type="submit" form="checklistForm" value="fnb" name="checklist" > F and B</button> <br><br>
+        <button type="submit" form="checklistForm" value="nonfnb" name="checklist" > Non F and B</button>
+    
+    
+    </form>
+    <br><br>
+    
+    {% if form %}
+    
+    <h2>Select those that apply </h2>
+    
+     <form action = "/checklist/calculate/" method="POST" id = "scoreForm" enctype="multipart/form-data">
+        {% csrf_token %}
+         <table>
+            {{ form }}
+         
+         </table>
+         
+         <br><br>
+        
+        <button type="submit" form="scoreForm" value={{category}} name="category">Submit</button>
+    
+    
+    </form>
+    
+    {% endif %}
+    
+    {% if score %}
+    <h2>Calculated Score: </h2>
+    {{ score }}
+    {% endif %}
+    
+    <br><br>
+    <button type ="button"><a href = '/checklist/'>Back</a></button>
+    
+    
+</center>
+    
+    
+    
+</body>
+</html>

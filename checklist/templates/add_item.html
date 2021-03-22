@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Items</title>
+    <link rel="stylesheet" href="C:/Users/minxuan/tecwatch/tecwatch/src/App.css">
+    
+</head>
+    
+<body>
+<center>
+    <h1>Add Checklist Items</h1>
+    <form action = "/checklist/additems/" method="POST" id = "itemForm" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            
+            {{form}}
+            
+        
+        </table>
+        <br>
+        <br>
+        <button type="submit" form="itemForm">Add more items</button>  
+    
+    
+    </form>
+    
+    <br><br><hr>
+    
+    <h1>List of Checklist Items so far: <br> </h1>
+    
+    {% for i in items %}
+        {{i.description}} <br>
+    
+    {% empty %}
+    
+    {% endfor %}
+    
+    <br><br>
+    <button type ="button"><a href = '/checklist/'>Back</a></button>
+    
+    
+    
+    
+    
+</center>
+    
+    
+    
+</body>
+</html>

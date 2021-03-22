@@ -11,8 +11,6 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 
 # Create your views here.
-def home(request):
-    return HttpResponse('Home Page')
 
 def create_complaint(request):
     
@@ -86,19 +84,12 @@ def homestaff(request):
 def hometenant(request):
     context = {}
     if request.method == 'POST':
-        try:
-            complaintid = request.POST.get('complaintid', -1)
-            complaint = Complaint.objects.get(id = complaintid)  
-            form = Rectification_Form()
-            return render(request, 'rectify.html', {'complaint' : complaint, 'form': form})
-        
-        except: 
-            loginId = request.POST.get('loginId', 0)
-            tenant = Tenant.objects.get(username = loginId)
-            context['tenant'] = tenant
-            complaints = Complaint.objects.filter(tenant = tenant).order_by('date_created')[::-1]
-            context['complaints'] = complaints
-            return render(request, 'home_tenant.html', context)    
+        loginId = request.POST.get('loginId', 0)
+        tenant = Tenant.objects.get(username = loginId)
+        context['tenant'] = tenant
+        complaints = Complaint.objects.filter(tenant = tenant).order_by('date_created')[::-1]
+        context['complaints'] = complaints
+        return render(request, 'home_tenant.html', context)    
     
     return render(request, 'error.html')
 
@@ -121,6 +112,7 @@ def view_tenant(request):
         context['tenant'] = tenant
         context['complaints'] = complaints
         context['staff'] = staff
+        context['action'] = "Upload more details"
         return render(request, 'view_tenant.html', context)
         
     
@@ -221,6 +213,7 @@ def update_success(request):
             u.save()
             return redirect('/singhealth/successtenant')
             
+
     
     return render(request, 'error.html')
 

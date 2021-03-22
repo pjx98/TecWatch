@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'singhealth',
     'rest_framework',
+    'checklist',
 ]
 
 MIDDLEWARE = [

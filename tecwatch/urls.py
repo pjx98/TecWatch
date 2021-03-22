@@ -25,6 +25,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('singhealth/', include('singhealth.urls')),
+    path('checklist/', include ('checklist.urls')),
 ]
 
 if settings.DEBUG:
