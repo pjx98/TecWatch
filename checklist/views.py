@@ -99,7 +99,7 @@ def calculate(request):
                 checked = form.cleaned_data['items']
                 score = checked.count()
                 score_object = ChecklistScore(score = score)
-                score_object.checked_set = checked
+                score_object.checked = checked
                 score_object.save()
                 context['score'] = score
                 

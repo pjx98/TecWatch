@@ -19,7 +19,7 @@ class Checklist(models.Model):
     )
     
     category = models.CharField(max_length = 10, null = True, choices = CATEGORY, default = "no category")
-    items = models.ManyToManyField(ChecklistItem)
+    items = models.ManyToManyField(ChecklistItem, related_name='checklist')
     
     def __str__(self):
         return self.category
@@ -27,8 +27,8 @@ class Checklist(models.Model):
 class ChecklistScore(models.Model):
     
     score = models.PositiveIntegerField(null = True)
-    complaint = models.ForeignKey("singhealth.Complaint", null=True, on_delete = models.CASCADE)
-    checked = models.ManyToManyField(ChecklistItem)
+    complaint = models.OneToOneField("singhealth.Complaint", null=True, on_delete = models.CASCADE, related_name='score')
+    checked = models.ManyToManyField(ChecklistItem, related_name='checked')
     
 
     

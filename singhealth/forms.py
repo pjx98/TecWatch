@@ -1,12 +1,16 @@
 from django import forms
 from .models import Complaint, Update
+from django.forms import ModelForm
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django import forms
+from .models import *
 
 #DataFlair #File_Upload
 class Complaint_Form(forms.ModelForm):
     class Meta:
         model = Complaint
-        fields = [     
-        'score',
+        fields = [  
         'deadline',
         'notes',
         ]
@@ -29,12 +33,15 @@ class Update_Form(forms.ModelForm):
         }
         
         
-class Complaint_Tenant(forms.ModelForm):
-    class Meta:
-        model = Complaint
-        fields = [
-            'tenant',
-        ]
+# class Complaint_Tenant(forms.ModelForm):
+#     class Meta:
+#         model = Complaint
+#         fields = [
+#             'tenant',
+#         ]
+
+class Complaint_Tenant(forms.Form):
+        tenant = forms.ModelChoiceField(queryset=User.objects.filter(groups__name='Tenant'))
         
 class Complaint_Notes(forms.ModelForm):
     class Meta:
@@ -43,6 +50,11 @@ class Complaint_Notes(forms.ModelForm):
             'notes'
         ]
         
+class CreateUserForm(UserCreationForm):
+	class Meta:
+		model = User
+		fields = ['username', 'email', 'password1', 'password2']
+
 
 
 

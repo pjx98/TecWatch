@@ -1,5 +1,8 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth import get_user_model
+from django.conf import settings
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Staff(models.Model):
@@ -48,14 +51,15 @@ class Complaint(models.Model):
     )
     
     subject = models.CharField(max_length = 100, null=True)
-    score = models.PositiveIntegerField(null = True)
     deadline = models.DateField(help_text="YYYY-MM-DD", null=True)
     date_created = models.DateTimeField(default = timezone.now, null=True)
     notes = models.TextField(null=True, help_text = "**Not visible to tenant")
     status = models.CharField(max_length = 100, null=True, choices = STATUS)
+    staff = models.ForeignKey(User, null=True, on_delete = models.CASCADE, related_name='staff')
     
-    staff = models.ForeignKey(Staff, null=True, on_delete = models.CASCADE)
-    tenant = models.ForeignKey(Tenant, null=True, on_delete = models.CASCADE)
+    # User = get_user_model()
+    # tenants = User.objects.filter(groups__name='Tenant')
+    tenant = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete = models.CASCADE, related_name='tenant')
 
     def __str__(self):
         return str(self.id)

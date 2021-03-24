@@ -1,74 +1,125 @@
 <!DOCTYPE html>
-<html>
+
+
 <head>
     <title>Staff Homepage</title>
-    <link rel="stylesheet" href="C:/Users/minxuan/tecwatch/tecwatch/src/App.css">
-    
-</head>
-    
-<body>
-<center>
-    <button type="button"><a href="/singhealth/login">Log Out</a></button>
-    <br><br>
-    <h1>Welcome {{staff.name}}!</h1><br>
-    <h2>You can create a new complaint or view all complaints you have made</h2><br><br>
-    
-    <form action = "/singhealth/create/" method="POST" id = "idForm" enctype="multipart/form-data">
-        {% csrf_token %}
-        <button type="submit" name="staffId" value={{staff.username}} form="idForm">Create a new complaint</button>
-    </form>
-    
-    <br><br><br>
-    
-    <h2>All Tenants:</h2><br>
-    
-    {% for t in tenants %}
-    Name: {{t.name}}<br>
-    Outlet: {{t.outlet}}<br> 
-    <form action = "/singhealth/viewtenant/" method="POST" id="viewTenantForm" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="hidden" name="staffId" value={{staff.username}} form="viewTenantForm"/>
-        <button type="submit" name="tenantId" value={{t.username}} form="viewTenantForm">View related complaints</button>        
-    </form> <br><br>
-    
-    {% empty %}
-    There are no tenants registered
-    
-    
-    <br> <br>
-    {% endfor %}
-    <hr>
-    
-    <h2>Your complaints:</h2>
-    
-    <p>
-        
-                {% for com in complaints %}
-                Complaint id: {{com.id}}<br>
-                Tenant Involved: {{com.tenant.name}} <br>
-                Subject: {{com.subject}} <br>
-                Status: {{com.status}} <br>  
-                
-                <form action = "/singhealth/viewcomplaint/" method="POST" id="viewComplaintForm" enctype="multipart/form-data">
-                {% csrf_token %}
-                <input type="hidden" name="identity" value="staff" form="viewComplaintForm"/>
-                <button type="submit" name="complaintId" value={{com.id}} form="viewComplaintForm">View more details</button>        
-                </form> <br><br>
-        
-                <hr>
-    
-                {% empty %}
-                You have not made any complaints
-    
-                {% endfor %}
-                
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+        integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <link rel='stylesheet' href="./assets/css/style.css">
 
-    </p>
-    
-    
-</center>
-    
-    
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="container h-100">
+        <div class="d-flex justify-content-center h-100">
+            <div class="user_card" style="width: 750px;">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="offset-2 col-8 text-center">
+                                <h1>Welcome {{staff}}!</h1><br>
+                            </div>
+                            <div class="col-2">
+                                <button type="button" class="btn btn-danger"><a href={% url 'logout' %}
+                                        style="color:white">Log
+                                        Out</a></button>
+                            </div>
+                            <div class="col-12 text-center">
+                                <h5>You can create a new complaint or view all complaints you have made</h5><br>
+                                <button type="button" class="btn btn-primary"><a href={% url 'create' %}
+                                        style="color:white">Create a new complaint</a></button>
+                                <hr />
+                            </div>
+                            <div class="col-12">
+                                <h2 class="text-center">All Tenants</h2>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <table class="table">
+                                            <tbody>
+                                                {% for t in tenants %}
+                                                <tr>
+                                                    <th scope="row" style="vertical-align: middle;">
+                                                        <i class="fas fa-home"></i>
+                                                    </th>
+                                                    <td> 
+                                                        <p>Name: {{t.username}}</p>
+                                                        <p>Outlet: {{t.groups.all.1.name}}</p>
+                                                    </td>
+                                                    <td>
+                                                        <div class="col-12 text-center" style="margin-top:20px">
+                                                            <form action="/singhealth/viewtenant/" method="POST"
+                                                                id="viewTenantForm" enctype="multipart/form-data">
+                                                                {% csrf_token %}
+                                                                <input type="hidden" name="staffId"
+                                                                    value={{staff.username}} form="viewTenantForm" />
+                                                                <button class="btn btn-primary" type="submit"
+                                                                    name="tenantId" value={{t.username}}
+                                                                    form="viewTenantForm">View related
+                                                                    complaints</button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                {% empty %}
+                                                <div class="col-12 text-center">There are no tenants registered</div>
+                                                {% endfor %}
+                                            </tbody>
+                                            </td>
+                                        </table>
+                                        <hr />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-center">
+                            <h2>Your complaints</h2>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <table class="table">
+                                    <tbody>
+                                        {% for com in complaints %}
+                                        <tr>
+                                            <th scope="row" style="vertical-align: middle;">
+                                                <i class="fas fa-home"></i>
+                                            </th>
+                                            <td>
+                                                <p>Complaint id: {{com.id}}</p>
+                                                <p>Tenant Involved: {{com.tenant.username}}</p>
+                                                <p>Subject: {{com.subject}} </p>
+                                                <p>Status: {{com.status}}</p>
+                                            </td>
+                                            <td>
+                                                <div class="col-12 text-center" style="margin-top:20px">
+                                                    <form action="/singhealth/viewcomplaint/" method="POST"
+                                                        id="viewComplaintForm" enctype="multipart/form-data">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="identity" value="staff"
+                                                            form="viewComplaintForm" />
+                                                        <button class="btn btn-primary" type="submit" name="complaintId"
+                                                            value={{com.id}} form="viewComplaintForm">View more
+                                                            details</button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% empty %}
+                                        <div class="col-12 text-center">You have not made any complaints</div>
+                                        {% endfor %}
+                                    </tbody>
+                                    </td>
+                                </table>
+                                <hr />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
