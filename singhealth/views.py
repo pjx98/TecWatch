@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect
 from .forms import Complaint_Form, Update_Form, Complaint_Tenant, Complaint_Notes
-from .models import Complaint, Tenant, Staff, Outlet, Update
+from .models import Complaint, Outlet, Update
 from django.utils import timezone
 
-from .serializer import ComplaintSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status

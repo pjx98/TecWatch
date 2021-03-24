@@ -5,14 +5,6 @@ from django.conf import settings
 from django.contrib.auth.models import User
 
 # Create your models here.
-class Staff(models.Model):
-    name = models.CharField(max_length = 100, null=True)
-    username = models.CharField(max_length = 100, null=True)
-    email = models.CharField(max_length = 100, null=True)
-    date_created = models.DateTimeField(default = timezone.now, null=True)
-
-    def __str__(self):
-        return self.name
 
 class Outlet(models.Model):
     TYPE = (
@@ -33,15 +25,6 @@ class Outlet(models.Model):
     def __str__(self):
         return self.location + " (" + self.type + ")"
 
-class Tenant(models.Model):
-    name = models.CharField(max_length = 100, null=True)
-    username = models.CharField(max_length = 100, null=True)
-    email = models.CharField(max_length = 100, null=True)
-    date_created = models.DateTimeField(default = timezone.now, null=True)
-    outlet = models.ForeignKey(Outlet, null=True, on_delete = models.CASCADE)
-
-    def __str__(self):
-        return self.name
 
 class Complaint(models.Model):
     STATUS = (
