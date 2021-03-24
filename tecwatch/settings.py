@@ -38,12 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'singhealth',
-<<<<<<< HEAD
-    'rest_framework',
     'checklist',
-=======
     
->>>>>>> dc39ca69454612175786f1e9bdc06d960207b307
 ]
 
 MIDDLEWARE = [

@@ -3,12 +3,6 @@ from .forms import Complaint_Form, Update_Form, Complaint_Tenant, Complaint_Note
 from .models import Complaint, Outlet, Update
 from django.utils import timezone
 
-<<<<<<< HEAD
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-=======
->>>>>>> dc39ca69454612175786f1e9bdc06d960207b307
 from django.shortcuts import get_object_or_404
 
 from django.http import HttpResponse
