@@ -38,8 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'singhealth',
+<<<<<<< HEAD
     'rest_framework',
     'checklist',
+=======
+    
+>>>>>>> dc39ca69454612175786f1e9bdc06d960207b307
 ]
 
 MIDDLEWARE = [
@@ -126,11 +130,3 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static_media/')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
 
-REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.JSONRenderer',
-    ],
-    'DEFAULT_PARSER_CLASSES': [
-        'rest_framework.parsers.JSONParser',
-    ]
-}

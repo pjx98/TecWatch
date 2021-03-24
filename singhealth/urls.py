@@ -4,7 +4,11 @@ from tecwatch import settings
 from django.conf.urls.static import static
 from django.views.generic import RedirectView
 from django.conf.urls import url
+<<<<<<< HEAD
 from rest_framework import routers
+=======
+
+>>>>>>> dc39ca69454612175786f1e9bdc06d960207b307
 
 
 urlpatterns = [

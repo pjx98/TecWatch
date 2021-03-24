@@ -3,9 +3,12 @@ from .forms import Complaint_Form, Update_Form, Complaint_Tenant, Complaint_Note
 from .models import Complaint, Outlet, Update
 from django.utils import timezone
 
+<<<<<<< HEAD
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+=======
+>>>>>>> dc39ca69454612175786f1e9bdc06d960207b307
 from django.shortcuts import get_object_or_404
 
 from django.http import HttpResponse
@@ -268,7 +271,7 @@ def success_staff(request):
     userId = update.complaint.staff.username
     context['userId'] = userId
     context['action'] = "Update"
-    context['identity'] = identity = request.user.groups.all()[0].name
+    context['identity'] = request.user.groups.all()[0].name
     return render(request, 'success.html', context)
 
 @login_required(login_url='login')
@@ -278,7 +281,7 @@ def success_tenant(request):
     userId = update.complaint.tenant.username
     context['userId'] = userId
     context['action'] = "Rectification"
-    context['identity'] = "tenant"
+    context['identity'] = request.user.groups.all()[0].name
     return render(request, 'success.html', context)
     
 
@@ -313,10 +316,12 @@ def loginPage(request):
 
 		if user is not None:
 			login(request, user)
-			if user.groups.filter (name='Staff'):
+			if user.groups.filter (name="Staff"):
 				return redirect('homestaff')
 			elif user.groups.filter (name='Tenant'):
 				return redirect('hometenant')
+
+            
 		else:
 			messages.info(request, 'Username OR password is incorrect')
 
