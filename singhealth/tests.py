@@ -22,7 +22,8 @@ password = "~1qaz2wsx"
 class seleniumTest(LiveServerTestCase):
 
     def setUp(self):
-        self.driver = webdriver.Edge(r'C:\\VS JAVA\\msedgedriver.exe')
+        self.driver = webdriver.Chrome(r'C:\\chromedriver.exe')
+        # self.driver = webdriver.Edge(r'C:\\VS JAVA\\msedgedriver.exe')
         self.client = Client()
         
         #Create Staff User
@@ -128,3 +129,67 @@ class seleniumTest(LiveServerTestCase):
 
         assert "Test_Complaint_1" in driver.page_source
     
+    # python manage.py test singhealth.tests.seleniumTest.test_login_tenant
+    def test_login_tenant(self):
+        driver = self.driver
+        driver.get('%s%s' % (self.live_server_url, '/singhealth/'))
+        time.sleep(2)
+        username_input = driver.find_element_by_name("username")
+        username_input.send_keys(self.tenant.username)
+        time.sleep(2)
+        password_input = driver.find_element_by_name("password")
+        password_input.send_keys(password)
+        time.sleep(2)
+        driver.find_element_by_css_selector('form input[type="submit"]').click()
+        time.sleep(2)
+        assert "Tenant Homepage" in driver.page_source
+
+    # python manage.py test singhealth.tests.seleniumTest.upload_complaint
+    def upload_rectification(self):
+        
+        # Login tenant user
+        driver = self.driver
+        driver.get('%s%s' % (self.live_server_url, '/singhealth/'))
+        time.sleep(1)
+        username_input = driver.find_element_by_name("username")
+        username_input.send_keys(self.tenant.username)
+        time.sleep(1)
+        password_input = driver.find_element_by_name("password")
+        password_input.send_keys(password)
+        time.sleep(1)
+        driver.find_element_by_css_selector('form input[type="submit"]').click()
+        time.sleep(1)
+        
+        # Navigate: View first complaint encountered;  
+        # Consider implementing automatic loop through all complaints later
+        select = Select(driver.find_element_by_name('viewComplaintForm'))
+        time.sleep(2)
+
+        # Upload rectification
+        driver.find_element_by_name("updateid").click()
+        time.sleep(2)
+        
+        # Input subject field
+        subject_input = driver.find_element_by_name("subject")
+        subject_input.send_keys("Test_Complaint_1")
+        time.sleep(2)
+        
+        # Upload Image
+        upload_field = driver.find_element_by_xpath("//input[@type='file']")
+        upload_field.send_keys("D:\\Term5\\50.003\\Project\\Techwatch_images\\beautiful-sunset-tropical-beach-palm-260nw-1716193708.jpg")
+        time.sleep(2)
+        
+         # Input comment field
+        comment_input = driver.find_element_by_name("comments")
+        comment_input.send_keys("Test_Comments")
+        time.sleep(2)
+        
+        # Upload Complaint
+        driver.find_element_by_name("comId").click()
+        time.sleep(2)
+        
+        # Verify if complaint is submitted successfully
+        driver.find_element_by_name("complaintId").click()
+        time.sleep(5)
+
+        assert "Rectification submitted successfully" in driver.page_source
