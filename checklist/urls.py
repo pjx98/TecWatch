@@ -12,7 +12,9 @@ urlpatterns = [
     path('fnb/', views.fnb),
     path('nonfnb/', views.nonfnb),
     path('update/', views.update_checklist),
-    path('calculate/', views.calculate),
+    path('audit/', views.audit),
+    path('viewaudits/', views.view_audit),
+    path('calculatescore/',  views.calculate_score),
     
 ]
 

@@ -50,7 +50,7 @@
                                     {% endif %}
                                     <b>Current Status:</b> {{complaint.status}} <br>
                                     <b>Given Deadline:</b> {{complaint.deadline}} <br>
-                                    <b>Score:</b> {{complaint.score}} <br>
+                                    <b>Score:</b> {{complaint.checklist.score}} <br>
                                     {% if identity == "Staff" %}
                                     <b>Notes:</b> {{complaint.notes}} <br><br>
                                     {% endif %}

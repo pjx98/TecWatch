@@ -37,7 +37,6 @@ class ScoreForm(forms.ModelForm):
                 queryset = Checklist.objects.get(category=category).items.all(),
                 widget = forms.CheckboxSelectMultiple,
                 label = "",
-                initial = False,
             )   
     
     

@@ -28,6 +28,7 @@ class Outlet(models.Model):
 
 class Complaint(models.Model):
     STATUS = (
+        ('Editing', 'Editing'),
         ('Open', 'Open'),
         ('Expired', 'Expired'),
         ('Resolved', 'Resolved'),
@@ -39,10 +40,9 @@ class Complaint(models.Model):
     notes = models.TextField(null=True, help_text = "**Not visible to tenant")
     status = models.CharField(max_length = 100, null=True, choices = STATUS)
     staff = models.ForeignKey(User, null=True, on_delete = models.CASCADE, related_name='staff')
+    checklist = models.ForeignKey("checklist.ChecklistScore", null=True, on_delete = models.CASCADE)
     
-    # User = get_user_model()
-    # tenants = User.objects.filter(groups__name='Tenant')
-    tenant = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete = models.CASCADE, related_name='tenant')
+    tenant = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete = models.CASCADE, related_name='tenant_complaint')
 
     def __str__(self):
         return str(self.id)

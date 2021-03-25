@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import Complaint_Form, Update_Form, Complaint_Tenant, Complaint_Notes
 from .models import Complaint, Outlet, Update
 from django.utils import timezone
+from checklist.models import ChecklistScore
 
 from django.shortcuts import get_object_or_404
 
@@ -27,9 +28,36 @@ def home(request):
     return HttpResponse('Home Page')
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['Staff'])
 def create_complaint(request):
     context = {}
-
+    
+    if request.method == 'POST':
+       
+        form1 = Complaint_Tenant(request.POST, request.FILES)
+        form2 = Complaint_Form(request.POST, request.FILES)
+        form3 = Update_Form(request.POST, request.FILES)            
+            
+        if form1.is_valid() and form2.is_valid():      
+        
+            complaint = form2.save(commit=False)
+            complaint.tenant = form1.cleaned_data['tenant']
+            complaint.status = 'Open'
+            complaint.staff = request.user
+            complaint.checklist = form1.cleaned_data['checklist']
+            
+            if form3.is_valid():
+                update = form3.save(commit=False)
+                update.complaint = complaint
+                update.edit_name = str(complaint.staff.username)
+                complaint.subject = update.subject
+                complaint.deadline = request.POST.get('deadline', 0)
+                
+                complaint.save()
+                update.save() 
+                
+                return redirect('homestaff')
+            
     context['staff'] = request.user
             
     form1 = Complaint_Tenant()
@@ -38,45 +66,11 @@ def create_complaint(request):
     context['form_update'] = form2    
     form3 = Complaint_Form()
     context['form_complaint2'] = form3
-    
-    if request.method == 'POST':
-       
-        form1 = Complaint_Tenant(request.POST, request.FILES)
-        form2 = Complaint_Form(request.POST, request.FILES)
-        form3 = Update_Form(request.POST, request.FILES)
-        if form1.is_valid() and form2.is_valid():
-            complaint = form2.save(commit=False)
-            #complaint1 = form1.save(commit=False)
-            complaint1 = form1.cleaned_data['tenant']
-            complaint.tenant = complaint1
-            complaint.status = 'Open'
-            #staffUsername = request.POST.get('userId', -1)
-            complaint.staff = request.user
-            if form3.is_valid():
-                update = form3.save(commit=False)
-                update.complaint = complaint
-                update.edit_name = str(complaint.staff.username)
-                complaint.subject = update.subject
-                complaint.save()
-                update.save() 
-                
-                return redirect('homestaff')
+            
     return render(request, 'create.html', context)
+            
 
 
-        
-    
-
-# def create_success(request):
-#     context = {}
-#     complaint = Complaint.objects.last()
-#     context['complaint'] = complaint
-#     update = Update.objects.get(complaint = complaint)
-#     context['update'] = update
-#     return render(request, 'complaint_success.html', context)
-
-# def login(request):
-#     return render(request, 'login_buttons.html')
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Staff'])
@@ -85,21 +79,11 @@ def homestaff(request):
     identity = request.user.groups.all()[0].name
     staff = request.user
     
-    # loginId = request.POST.get('loginId', -1)
-    # staff = Staff.objects.get(username = loginId)
-        
-    # context['staff'] = staff    
-    # tenants = Tenant.objects.all()
-    # context['tenants'] = tenants
     complaints = Complaint.objects.filter(staff = staff).order_by('date_created')[::-1]
-    # context['complaints'] = complaints
 
     username = request.user.username
-    #tenants = Tenant.objects.all()
     User = get_user_model()
-    #users = User.objects.all()
     tenants = User.objects.filter(groups__name='Tenant')
-    #complaints = Complaint.objects.all()
 
     context['staff'] = username
     context['tenants'] = tenants
@@ -111,6 +95,7 @@ def homestaff(request):
     
     
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['Tenant'])
 def hometenant(request):
     context = {}
     
@@ -127,31 +112,24 @@ def hometenant(request):
 
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['Staff'])
 def view_tenant(request):
     if request.method == "POST":
         context = {}
-        # tenantId = request.POST.get('tenantId', -1)
-        # staffId = request.POST.get('staffId', -1)
-        # tenant = Tenant.objects.get(username = tenantId)
-        # staff = Staff.objects.get(username = staffId)
-        # complaints = Complaint.objects.filter(staff = staff, tenant = tenant).order_by('date_created')[::-1]
-
         username = request.user.username
-        #tenants = Tenant.objects.all()
         User = get_user_model()
-        #users = User.objects.all()
-
         #get username of tenant
-        tenantId = request.POST.get('tenantId', -1)
+        tenantId = request.POST.get('complaint', -1)
         tenant = User.objects.get(username=tenantId)
 
-        #to channge to filter out complaint against specific tenant
-        complaints = Complaint.objects.all()
+        #to change to filter out complaint against specific tenant
+        complaints = Complaint.objects.filter(tenant = tenant).order_by('date_created')[::-1]
 
         context['tenant'] = tenant
         context['complaints'] = complaints
         context['staff'] = request.user
         return render(request, 'view_tenant.html', context)
+        
         
     
 @login_required(login_url='login')

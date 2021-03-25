@@ -10,8 +10,7 @@ from .models import *
 class Complaint_Form(forms.ModelForm):
     class Meta:
         model = Complaint
-        fields = [  
-        'deadline',
+        fields = [
         'notes',
         ]
 
@@ -32,16 +31,20 @@ class Update_Form(forms.ModelForm):
             'photo' : "Upload picture"
         }
         
-        
-# class Complaint_Tenant(forms.ModelForm):
-#     class Meta:
-#         model = Complaint
-#         fields = [
-#             'tenant',
-#         ]
 
-class Complaint_Tenant(forms.Form):
-        tenant = forms.ModelChoiceField(queryset=User.objects.filter(groups__name='Tenant'))
+class Complaint_Tenant(forms.ModelForm):
+    class Meta:
+        model = Complaint
+        fields = ['tenant', 'checklist',]
+        labels = {'checklist' : "Relevant Checklist"}
+    
+    
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['tenant'] = forms.ModelChoiceField(
+            queryset = User.objects.filter(groups__name='Tenant')
+        )
         
 class Complaint_Notes(forms.ModelForm):
     class Meta:

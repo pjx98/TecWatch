@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Calculate Score</title>
+    <title>Perform Audit</title>
     <link rel="stylesheet" href="C:/Users/minxuan/tecwatch/tecwatch/src/App.css">
     
 </head>
     
 <body>
 <center>
-    <h1>Calculate Score</h1>
+    <h1>Perform Audit for {{tenant.username}}</h1>
     <h2>Select relevant checklist</h2>
     
-    <form action = "/checklist/calculate/" method="POST" id = "checklistForm" enctype="multipart/form-data">
+    <form action = "/checklist/audit/" method="POST" id = "checklistForm" enctype="multipart/form-data">
         {% csrf_token %}
+        
+        <input type="hidden" name="tenantId" value={{tenant.username}} form="checklistForm"/>
+        
         
         <button type="submit" form="checklistForm" value="fnb" name="checklist" > F and B</button> <br><br>
         <button type="submit" form="checklistForm" value="nonfnb" name="checklist" > Non F and B</button>
@@ -25,7 +28,7 @@
     
     <h2>Select those that apply </h2>
     
-     <form action = "/checklist/calculate/" method="POST" id = "scoreForm" enctype="multipart/form-data">
+     <form action = "/checklist/calculatescore/" method="POST" id = "scoreForm" enctype="multipart/form-data">
         {% csrf_token %}
          <table>
             {{ form }}
@@ -33,7 +36,8 @@
          </table>
          
          <br><br>
-        
+         
+        <input type="hidden" name="tenantId" value={{tenant.username}} form="scoreForm"/>
         <button type="submit" form="scoreForm" value={{category}} name="category">Submit</button>
     
     
@@ -47,7 +51,8 @@
     {% endif %}
     
     <br><br>
-    <button type ="button"><a href = '/checklist/'>Back</a></button>
+    <button type="button" value="score" onClick="javascript:history.go(-1);">Back</button>
+    
     
     
 </center>

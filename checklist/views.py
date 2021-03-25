@@ -4,6 +4,18 @@ from .models import ChecklistItem, Checklist, ChecklistScore
 from django.forms import modelformset_factory
 
 
+from django.contrib.auth import authenticate, login, logout, get_user_model
+
+from django.contrib import messages
+
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
+
+from .models import *
+
+from .decorators import *
+
+
 # Create your views here.
 def add_items(request):
     if request.method == "POST":
@@ -80,35 +92,77 @@ def update_checklist(request):
     
     return render(request, 'view_checklist.html', context)
 
-
-def calculate(request):
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Staff'])
+def audit(request):
     context = {}
-    if request.method == "POST":
-        try:
-            category = request.POST.get('checklist', 0)
-            checklist = Checklist.objects.get(category = category) 
-            form = ScoreForm(category=category)
-            context['form'] = form
-            context['category'] = category
-            
-        except:
-            category = request.POST.get('category', 0)
-            checklist = Checklist.objects.get(category = category) 
-            form = ScoreForm(request.POST, request.FILES, category = category)
-            if form.is_valid():
-                checked = form.cleaned_data['items']
-                score = checked.count()
-                score_object = ChecklistScore(score = score)
-                score_object.checked = checked
-                score_object.save()
-                context['score'] = score
-                
-                
-            form = ScoreForm(category = category)
-            context['form'] = form
-            context['category'] = category              
-            
     
-    return render(request, 'calculate.html', context)
+    if request.method == "POST":
+        tenantId = request.POST.get('tenantId', -1)
+        tenant = User.objects.get(username=tenantId)
+        category = request.POST.get('checklist', 0)
+        checklist = Checklist.objects.get(category = category) 
+        formc = ScoreForm(category = category)
+        context['form'] = formc
+        context['category'] = category 
+        context['tenant'] = tenant
+        
+            
+    elif request.method == "GET":
+        tenantId = request.GET.get('tenantId', -1)
+        tenant = User.objects.get(username=tenantId)
+            
+    context['tenant'] = tenant
+    return render(request, 'audit.html', context)
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Staff'])
+def view_audit(request):
+    context = {}
+    
+    if request.method == "POST":
+        tenantId = request.POST.get('audit', -1)
+    elif request.method == "GET":
+        tenantId = request.GET.get('audit', -1)  
+        
+    tenant = User.objects.get(username=tenantId)
+    audits = ChecklistScore.objects.filter(tenant = tenant).order_by('date_created')[::-1]
+    context['audits'] = audits
+    context['tenant'] = tenant
+    return render(request, 'view_audit.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Staff'])
+def calculate_score(request):
+    context = {}
+    
+    category = request.POST.get('category', 0)
+    checklist = Checklist.objects.get(category = category) 
+    
+    tenantId = request.POST.get('tenantId', -1)
+    tenant = User.objects.get(username=tenantId)
+    
+    formc = ScoreForm(category = category)
+    form = ScoreForm(request.POST, request.FILES, category = category)
+    if form.is_valid():
+        checked = form.cleaned_data['items']
+        score = checked.count()
+        score_object = ChecklistScore(score = score)
+        score_object.save()
+        score_object.checked = list(checked.values_list('description', flat=True))
+                
+        score_object.unchecked = list(set(formc.fields['items'].queryset.values_list('description', flat=True)) - set(score_object.checked))
+        score_object.tenant = tenant
+        score_object.save()
+        context['score'] = score
+        context['checked'] = score_object.checked
+        context['test'] = score_object.unchecked
+        
+    return redirect('/singhealth/homestaff')
+    
+    
+    
+    
 
     

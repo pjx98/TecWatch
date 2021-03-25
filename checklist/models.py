@@ -1,4 +1,10 @@
 from django.db import models
+from django.utils import timezone
+from django.contrib.auth import get_user_model
+from django.conf import settings
+from django.contrib.auth.models import User
+from picklefield.fields import PickledObjectField
+
 
 # Create your models here.
     
@@ -26,9 +32,16 @@ class Checklist(models.Model):
     
 class ChecklistScore(models.Model):
     
+    date_created = models.DateTimeField(default=timezone.now, null=True)
     score = models.PositiveIntegerField(null = True)
-    complaint = models.OneToOneField("singhealth.Complaint", null=True, on_delete = models.CASCADE, related_name='score')
-    checked = models.ManyToManyField(ChecklistItem, related_name='checked')
+    checked = PickledObjectField(default = dict)
+    unchecked = PickledObjectField(default = dict)
+    tenant = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete = models.CASCADE, related_name='tenant_checklist')
+    
+    def __str__(self):
+        return str(self.date_created)[:10] + "; Score: " + str(self.score) + " (" + str(self.tenant.username) + ")"
+    
+    
     
 
     

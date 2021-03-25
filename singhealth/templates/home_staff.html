@@ -33,6 +33,33 @@
                                         style="color:white">Create a new complaint</a></button>
                                 <hr />
                             </div>
+                            
+                            
+                            
+                            
+                            <div class="col-12">
+                                <h2 class="text-center">Checklist Options</h2> <hr/>
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <button type="button" name="add_items_btn" class="btn btn-primary"><a href='/checklist/additems'
+                                        style="color:white">Add items to checklist</a></button>
+                                        
+                                        <button type="button" name="update_fnb_btn" class="btn btn-primary"><a href='/checklist/fnb'
+                                        style="color:white">Update F and B checklist</a></button>
+                                        
+                                        <button type="button" name="update_nonfnb_btn" class="btn btn-primary"><a href='/checklist/nonfnb'
+                                        style="color:white">Update Non F and B checklist</a></button>
+                                        <hr />
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            
+                            
+                            
+                            
+                            
                             <div class="col-12">
                                 <h2 class="text-center">All Tenants</h2>
                                 <div class="row">
@@ -53,12 +80,12 @@
                                                             <form action="/singhealth/viewtenant/" method="POST"
                                                                 id="viewTenantForm" enctype="multipart/form-data">
                                                                 {% csrf_token %}
-                                                                <input type="hidden" name="staffId"
-                                                                    value={{staff.username}} form="viewTenantForm" />
                                                                 <button class="btn btn-primary" type="submit"
-                                                                    name="tenantId" value={{t.username}}
+                                                                    name="complaint" value={{t.username}}
                                                                     form="viewTenantForm">View related
                                                                     complaints</button>
+                                                                <button class="btn btn-primary" type="submit" name="audit" value={{t.username}} formaction="/checklist/viewaudits/" formenctype="multipart/form-data" formmethod="get">View audits
+                                                                </button>
                                                             </form>
                                                         </div>
                                                     </td>
@@ -74,6 +101,9 @@
                                 </div>
                             </div>
                         </div>
+                
+                
+                
 
                         <div class="col-12 text-center">
                             <h2>Your complaints</h2>
@@ -100,7 +130,7 @@
                                                         {% csrf_token %}
                                                         <input type="hidden" name="identity" value="staff"
                                                             form="viewComplaintForm" />
-                                                        <button class="btn btn-primary" type="submit" name="complaintId"
+                                                        <button class="btn btn-primary "  type="submit" name="complaintId"
                                                             value={{com.id}} form="viewComplaintForm">View more
                                                             details</button>
                                                     </form>
