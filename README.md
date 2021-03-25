@@ -4,3 +4,4 @@ Scrapping React frontend in favour of a more integrable direct HTML/CSS/JS setup
 ## Currently working on:
 - Managing layouts by packaging HTML elements to reusable CSS files (TBC).
 - Testing usage of JS files.
+- Implementation of grid methods where possible to ease testing
