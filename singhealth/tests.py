@@ -162,7 +162,7 @@ class seleniumTest(LiveServerTestCase):
         
         # Navigate: View first complaint encountered;  
         # Consider implementing automatic loop through all complaints later
-        select = Select(driver.find_element_by_name('viewComplaintForm'))
+        select = Select(driver.find_element_by_name('complaintId'))
         time.sleep(2)
 
         # Upload rectification
