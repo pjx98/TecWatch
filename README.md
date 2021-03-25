@@ -1,4 +1,4 @@
-# Non-html elements (Cass)
+# Non-html elements (Cass' stuff, working off JX's setup)
 This branch manages non-frontend elements like testing cases via Selenium. Below are some additions and modifications made. 
 
 ## Currently in progress: additional testing cases for tenants in tests.py
