@@ -15,7 +15,8 @@ from .models import *
 
 from .decorators import *
 
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Staff'])
 # Create your views here.
 def add_items(request):
     if request.method == "POST":
@@ -35,7 +36,8 @@ def add_items(request):
     
     return render(request, 'add_item.html', context)
 
-    
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Staff'])
 def checklist_home(request):
     if request.method == "POST":
         option = request.POST.get('option', 0)
@@ -50,6 +52,8 @@ def checklist_home(request):
         
     return render(request, 'checklist_home.html')
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Staff'])
 def fnb(request):
     context = {}
     
@@ -62,7 +66,8 @@ def fnb(request):
     context['form'] = form
     return render(request, 'view_checklist.html', context)
     
-    
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Staff'])  
 def nonfnb(request):
     context = {}
     checklist = Checklist.objects.get(category = "nonfnb")
@@ -74,6 +79,8 @@ def nonfnb(request):
     context['form'] = form
     return render(request, 'view_checklist.html', context)
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Staff'])
 def update_checklist(request):
     context = {}
     if request.method == "POST":
