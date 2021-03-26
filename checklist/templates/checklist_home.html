@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checklist</title>
+    <link rel="stylesheet" href="C:/Users/minxuan/tecwatch/tecwatch/src/App.css">
+    
+</head>
+    
+<body>
+<center>
+    <h1>You can edit existing checklists using the options below</h1>
+    <form action = "/checklist/" method="POST" id = "optionsForm" enctype="multipart/form-data">
+        {% csrf_token %}
+        <button type="submit" form="optionsForm" name="option" value="new">Add new checklist items</button>  <br><br>
+        <button type="submit" form="optionsForm" name="option" value="fnb">F and B checklist</button> <br><br>
+        <button type="submit" form="optionsForm" name="option" value="nonfnb">Non F and B checklist</button> <br><br>
+        <button type="submit" form="optionsForm" name="option" value="audit">Audit</button>
+    </form>
+    
+    
+    
+    
+</center>
+    
+    
+    
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tenant Homepage</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+        integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <link rel='stylesheet' href="./assets/css/style.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+</head>
+    
+<body>
+    <div class="container h-100">
+        <div class="d-flex justify-content-center h-100">
+            <div class="user_card" style="width: 750px;">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="offset-2 col-8 text-center">
+                                <h1>Welcome {{tenant.username}}!</h1><br>
+                            </div>
+                            <div class="col-2">
+                                <button type="button" class="btn btn-danger"><a href={% url 'logout' %}
+                                    style="color:white">Log
+                                    Out</a></button>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-center">
+                            <h2>Here is a list of complaints made against you:</h2>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <table class="table">
+                                    <tbody>
+                                        {% for com in complaints %}
+                                        <tr>
+                                            <th scope="row" style="vertical-align: middle;">
+                                                <i class="fas fa-home"></i>
+                                            </th>
+                                            <td>
+                                                <p>Complaint id: {{com.id}}</p>
+                                                <p>Subject: {{com.subject}}</p>
+                                                <p>Given Deadline: {{com.deadline}} </p>
+                                                <p>Status: {{com.status}}</p>
+                                            </td>
+                                            <td>
+                                                <div class="col-12 text-center" style="margin-top:20px">
+                                                    <form action = "/singhealth/viewcomplaint/" method="POST" id="viewComplaintForm" enctype="multipart/form-data">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="identity" value="tenant" form="viewComplaintForm"/>
+                                                        <button type="submit" class="btn btn-primary" name="complaintId" value={{com.id}} form="viewComplaintForm">View more details</button>        
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% empty %}
+                                        <div class="col-12 text-center">There are currently no complaints</div>
+                                        {% endfor %}
+                                    </tbody>
+                                    </td>
+                                </table>
+                                <hr />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

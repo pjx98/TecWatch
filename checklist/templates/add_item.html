@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Items</title>
+    <link rel="stylesheet" href="C:/Users/minxuan/tecwatch/tecwatch/src/App.css">
+    
+</head>
+    
+<body>
+<center>
+    <h1>Add Checklist Items</h1>
+    <form action = "/checklist/additems/" method="POST" id = "itemForm" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            
+            {{form}}
+            
+        
+        </table>
+        <br>
+        <br>
+        <button type="submit" name='submit_description' form="itemForm">Add more items</button>  
+    
+    
+    </form>
+    
+    <br><br><hr>
+    
+    <h1>List of Checklist Items so far: <br> </h1>
+    
+    {% for i in items %}
+        {{i.description}} <br>
+    
+    {% empty %}
+    
+    {% endfor %}
+    
+    <br><br>
+    <button type="submit" name='back' value="score" onClick="javascript:history.go(-1);">Back</button>
+    
+    <div class="col-12 text-center">
+        <form action="/singhealth/homestaff/" method="POST" id="idForm"
+            enctype="multipart/form-data">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary" name="return"
+                value={{staff.username}} form="idForm">Return Home</button>
+
+
+        </form>
+    </div>
+    
+    
+    
+</center>
+    
+    
+    
+</body>
+</html>
