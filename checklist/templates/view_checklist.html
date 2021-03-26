@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% if category == 'fnb' %}
+                F &amp B Checklist
+            {%elif category == 'nonfnb' %}
+                Non F &amp B Checklist
+            {% endif %}
+    </title>
+    <link rel="stylesheet" href="C:/Users/minxuan/tecwatch/tecwatch/src/App.css">
+    
+</head>
+    
+<body>
+<center>
+    <h1>{% if category == 'fnb' %}
+                F &amp B Checklist
+            {%elif category == 'nonfnb' %}
+                Non F &amp B Checklist
+            {% endif %}
+    </h1>
+    <h2>Select checklist items</h2>
+    
+    <form action = "/checklist/update/" method="POST" id = "updateForm" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            
+            {{form}}
+            
+        
+        </table>
+        <br>
+        <br>
+        <input type="hidden" form="updateForm" value={{category}} name="category" />
+        <button type="submit" name='update' form="updateForm">Update checklist</button>  
+    
+    
+    </form>
+    
+    <br><br><hr>
+    
+    <h1>List of items in checklist so far: <br> </h1>
+    
+    {% for i in items %}
+        {{i.description}} <br>
+    
+    {% empty %}
+    
+    {% endfor %}
+    
+    <br><br>
+    <button type="button" value="score" onClick="javascript:history.go(-1);">Back</button>
+    
+    <div class="col-12 text-center">
+        <form action="/singhealth/homestaff/" method="POST" id="idForm"
+            enctype="multipart/form-data">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary" name="return"
+                value={{staff.username}} form="idForm">Return Home</button>
+
+
+        </form>
+    </div>
+    
+    
+    
+    
+</center>
+    
+    
+    
+</body>
+</html>
