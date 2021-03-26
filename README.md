@@ -3,7 +3,7 @@
 
 ## Group Members:
 
-Chang Min xuan -> Minxuan777
+Chang Min xuan -> Minxuan77
 
 Ang Sok Teng Cassie -> Kahssie
 
