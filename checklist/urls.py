@@ -4,7 +4,7 @@ from tecwatch import settings
 from django.conf.urls.static import static
 from django.views.generic import RedirectView
 from django.conf.urls import url
-from rest_framework import routers
+#from rest_framework import routers
 
 urlpatterns = [
     path('', views.checklist_home),

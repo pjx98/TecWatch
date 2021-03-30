@@ -1,0 +1,25 @@
+body{
+    background-color: #59CAF7;
+}
+
+h1{
+    color: white;
+    background-color:#f7ba5b;
+    padding: 40px;
+}
+
+button {
+    background-color: #5961F7;
+    border-color: transparent;
+    border-radius: 10px;
+    color: white;
+    padding: 10px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.spacer {
+    padding: 20px;
+}
