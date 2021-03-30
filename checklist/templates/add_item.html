@@ -25,7 +25,6 @@
         
         </table>
         <br>
-        <br>
         <button type="submit" name='submit_description' form="itemForm">Add more items</button>  
     
     
@@ -43,15 +42,13 @@
     </div>
     <button type="submit" name='back' value="score" onClick="javascript:history.go(-1);">Back</button>
     
-
-    <div class="returnDiv">
-        <form action="/singhealth/homestaff/" method="POST" id="idForm"
-            enctype="multipart/form-data">
-            {% csrf_token %}
-            <button type="submit" class="btn" name="return"
-                value={{staff.username}} form="idForm">Return Home</button>
-        </form>
-    </div>
+    <br><br>
+    <form action="/singhealth/homestaff/" method="POST" id="idForm"
+        enctype="multipart/form-data">
+        {% csrf_token %}
+        <button type="submit" class="btn" name="return"
+        value={{staff.username}} form="idForm">Return Home</button>
+    </form>
     
     
     

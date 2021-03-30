@@ -2,15 +2,32 @@ body{
     background-color: #add8e6;
 }
 
-h1{
-    color: white;
-    background-color:#f7ba5b;
-    padding: 40px;
-    margin: 2px;
+@media screen and (min-width: 481px){
+    h1{
+        color: white;
+        font-size: 50px;
+        background-color:#f7ba5b;
+        padding: 40px;
+        margin: 2px;
+    }
+}
+@media screen and (max-width: 480px){
+    h1{
+        color: white;
+        font-size: 10px;
+        background-color:#f7ba5b;
+        padding: 40px;
+        margin: 2px;
+    }
 }
 
-input{
+
+input {
     border-color: transparent;
+}
+
+label {
+    padding-right: 10px;
 }
 
 button {
@@ -63,8 +80,4 @@ button:hover {
     margin-right: 15%;
     background-color:#5B98F7;
     padding: 20px;
-}
-
-.returnDiv {
-    margin: 10px;
 }
