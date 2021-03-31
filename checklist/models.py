@@ -39,7 +39,7 @@ class ChecklistScore(models.Model):
     tenant = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete = models.CASCADE, related_name='tenant_checklist')
     
     def __str__(self):
-        return str(self.date_created)[:10] + "; Score: " + str(self.score) + " (" + str(self.tenant.username) + ")"
+        return str(self.date_created)[:10] + "; Score: " + str(self.score) + " (" + str(self.tenant.username) + ")" 
     
     
     

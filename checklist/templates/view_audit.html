@@ -32,8 +32,15 @@
                                     <button type="submit" class="btn btn-primary" form="makeauditForm" name="tenantId" value={{tenant.username}}>New Audit</button> <br><br>
                                 </form>
                             </div>
-                            
-                            
+                            <div class="col-12 text-center">
+                                <form action="/checklist/send_email/" method="POST" id="makeEmailForm"
+                                    enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary" name="tenantId" value={{tenant.username}} form="makeEmailForm">Export to email</button> <br><br>
+                                </form>
+                            </div>
+                            <div  class="row">
+
                             <div class="col-12 text-center">
                                 <p>
                                     
@@ -43,6 +50,15 @@
                                     <strong>Satisfactory Fields: </strong>{{a.checked}} <br>
                                     <strong>Unsatisfactory Fields: </strong>{{a.unchecked}} <br>
                                     <strong>Total Score:</strong> {{a.score}} <br>
+                                    
+                                    <form name="export_to_excel" method="POST" action="{% url 'export-excel' %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name='auditId' value={{a.id}}/>     
+                                        <input type="submit" value= 'Export Excel' />
+                                    </form>
+                                    
+
+                                    
                                     
                                     
                                     <br><br>

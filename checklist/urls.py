@@ -13,8 +13,11 @@ urlpatterns = [
     path('nonfnb/', views.nonfnb),
     path('update/', views.update_checklist),
     path('audit/', views.audit),
-    path('viewaudits/', views.view_audit),
+    path('viewaudits/', views.view_audit, name="view_audit"),
     path('calculatescore/',  views.calculate_score),
+    path('export_excel/', views.export_excel, name="export-excel"),
+    path('send_email/', views.go_to_email, name="email"),
+    path('click_mail/', views.send_mail_plain_with_file, name="click_mail")
     
 ]
 
