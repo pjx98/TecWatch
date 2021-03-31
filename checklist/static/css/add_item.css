@@ -1,5 +1,5 @@
 body{
-    background-color: #add8e6;
+    background-color:#fff;
 }
 
 @media screen and (min-width: 481px){
@@ -14,7 +14,7 @@ body{
 @media screen and (max-width: 480px){
     h1{
         color: white;
-        font-size: 10px;
+        font-size: 35px;
         background-color:#f7ba5b;
         padding: 40px;
         margin: 2px;
@@ -49,8 +49,8 @@ button:hover {
 }
 
 .formfield {
-    color: white;
-    background-color: #5B98F7;
+    color: #5961F7;
+    background-color: white;
     padding: 20px;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -73,11 +73,11 @@ button:hover {
 }
 
 .checklistContent {
-    color: white;
+    color: #5961F7;
     margin-top: 10px;
     margin-bottom: 10px;
     margin-left: 15%;
     margin-right: 15%;
-    background-color:#5B98F7;
+    background-color: white;
     padding: 20px;
 }
