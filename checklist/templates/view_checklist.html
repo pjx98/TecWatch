@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +8,15 @@
                 Non F &amp B Checklist
             {% endif %}
     </title>
-    <link rel="stylesheet" href="C:/Users/minxuan/tecwatch/tecwatch/src/App.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+        integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/view_checklist.css' %}">
     
 </head>
     
@@ -29,39 +38,32 @@
             
         
         </table>
-        <br>
-        <br>
         <input type="hidden" form="updateForm" value={{category}} name="category" />
-        <button type="submit" name='update' form="updateForm">Update checklist</button>  
-    
-    
+        <button type="submit" name='update'  class="btn btn-primary"form="updateForm">Update checklist</button>  
     </form>
     
-    <br><br><hr>
-    
-    <h1>List of items in checklist so far: <br> </h1>
-    
-    {% for i in items %}
-        {{i.description}} <br>
-    
-    {% empty %}
-    
-    {% endfor %}
-    
-    <br><br>
-    <button type="button" value="score" onClick="javascript:history.go(-1);">Back</button>
-    
-    <div class="col-12 text-center">
+    <hr/>
+
+    <h1>List of items in checklist so far:</h1>
+    <br>
+   
+    <div class="col-12 text-center">   
         <form action="/singhealth/homestaff/" method="POST" id="idForm"
             enctype="multipart/form-data">
+            {% for i in items %}
+            {{i.description}} <br>
+            
+            {% empty %}
+            
+            {% endfor %}
             {% csrf_token %}
-            <button type="submit" class="btn btn-primary" name="return"
-                value={{staff.username}} form="idForm">Return Home</button>
-
-
         </form>
     </div>
     
+    <button type="button" class="btn btn-primary" value="score" onClick="javascript:history.go(-1);">Back</button>
+    <br> <hr/> <br>
+    <button type="submit" class="btn" id="return" name="return"
+                value={{staff.username}} form="idForm">Return Home</button>
     
     
     
