@@ -15,7 +15,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/add_item.css' %}">
+    <link rel="stylesheet" href="{% static 'css/view_checklist.css' %}">
     
 </head>
     
@@ -38,36 +38,31 @@
         
         </table>
         <input type="hidden" form="updateForm" value={{category}} name="category" />
-        <button type="submit" name='update' form="updateForm">Update checklist</button>  
-    
-    
+        <button type="submit" name='update'  class="btn btn-primary"form="updateForm">Update checklist</button>  
     </form>
     
     <br><br>
     
     <h1>List of items in checklist so far: <br> </h1>
     
-    {% for i in items %}
-        {{i.description}} <br>
-    
-    {% empty %}
-    
-    {% endfor %}
-    
     <br><br>
-    <button type="button" value="score" onClick="javascript:history.go(-1);">Back</button>
-    <br><br>
-    <div class="col-12 text-center">
+   
+    <div class="col-12 text-center">   
         <form action="/singhealth/homestaff/" method="POST" id="idForm"
             enctype="multipart/form-data">
+            {% for i in items %}
+            {{i.description}} <br>
+            
+            {% empty %}
+            
+            {% endfor %}
             {% csrf_token %}
-            <button type="submit" class="btn" name="return"
-                value={{staff.username}} form="idForm">Return Home</button>
-
-
         </form>
     </div>
-    
+    <button type="button" class="btn btn-primary" value="score" onClick="javascript:history.go(-1);">Back</button>
+    <br><br>
+    <button type="submit" class="btn" id="return" name="return"
+                value={{staff.username}} form="idForm">Return Home</button>
     
     
     
