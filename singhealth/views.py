@@ -284,6 +284,7 @@ def registerPage(request):
 	context = {'form':form}
 	return render(request, 'register.html', context)
 
+
 def loginPage(request):
 
 	if request.method == 'POST':

@@ -41,7 +41,16 @@ INSTALLED_APPS = [
     'checklist',
     'notification',
     'background_task',
+    'axes'
     
+]
+
+AUTHENTICATION_BACKENDS = [
+    # AxesBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
+    'axes.backends.AxesBackend',
+
+    # Django ModelBackend is the default authentication backend.
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'axes.middleware.AxesMiddleware',
 ]
 
 ROOT_URLCONF = 'tecwatch.urls'
@@ -133,3 +143,8 @@ EMAIL_PORT=587
 EMAIL_HOST_USER='tecwatchtest@gmail.com'
 EMAIL_HOST_PASSWORD='~1qaz2wsx'
 EMAIL_USE_TLS=True 
+
+AXES_LOCK_OUT_AT_FAILURE = True
+AXES_USE_USER_AGENT = True
+AXES_COOLOFF_TIME = 1
+AXES_LOGIN_FAILURE_LIMIT = 5
