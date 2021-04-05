@@ -186,7 +186,7 @@ class seleniumTest(StaticLiveServerTestCase):
         
         # Input deadline field
         deadline_input = driver.find_element_by_name("deadline")
-        deadline_input.send_keys("03/28/2021")
+        deadline_input.send_keys("03/28/2022")
         time.sleep(2)
         
         # Input subject field

@@ -47,8 +47,18 @@
                                     {% for a in audits %}
                                     <strong>Date of Audit:</strong> {{a.date_created}}<br>
                                     <strong>Tenant Involved:</strong> {{a.tenant.username}} <br>
-                                    <strong>Satisfactory Fields: </strong>{{a.checked}} <br>
-                                    <strong>Unsatisfactory Fields: </strong>{{a.unchecked}} <br>
+                                    <strong>Satisfactory Fields: </strong> <br>
+                                    {% for c in a.checked %} 
+                                    {{c}} <br>
+                                    {% endfor %}
+
+                                    <br>
+                                    <strong>Unsatisfactory Fields: </strong><br>
+                                    {% for u in a.unchecked %} 
+                                    {{u}} <br>
+                                    {% endfor %}
+
+                                    <br>{{a.unchecked}} <br>
                                     <strong>Total Score:</strong> {{a.score}} <br>
                                     
                                     <form name="export_to_excel" method="POST" action="{% url 'export-excel' %}">

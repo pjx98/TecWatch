@@ -144,7 +144,15 @@ EMAIL_HOST_USER='tecwatchtest@gmail.com'
 EMAIL_HOST_PASSWORD='~1qaz2wsx'
 EMAIL_USE_TLS=True 
 
-AXES_LOCK_OUT_AT_FAILURE = True
-AXES_USE_USER_AGENT = True
-AXES_COOLOFF_TIME = 1
-AXES_LOGIN_FAILURE_LIMIT = 5
+AXES_LOCK_OUT_AT_FAILURE = True #After the number of allowed login attempts are exceeded, should we lock out this IP 
+                                #(and optional user agent)? Default: True
+
+
+AXES_USE_USER_AGENT = True #If True, lock out and log based on the IP address and the user agent. This means requests from different user agents but from the same IP are treated differently.
+                           #This settings has no effect if the AXES_ONLY_USER_FAILURES setting is active. Default: False
+
+AXES_COOLOFF_TIME = 1 # timeout in hours
+AXES_LOGIN_FAILURE_LIMIT = 5 
+AXES_LOCK_OUT_BY_USER_OR_IP = True # If True, prevent login from if the attempt limit has been exceeded for IP or username. 
+
+AXES_ONLY_USER_FAILURES = True # lock based on username and not ip
