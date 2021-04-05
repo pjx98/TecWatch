@@ -1,13 +1,10 @@
 from django.shortcuts import render, redirect
-from .forms import Complaint_Form, Update_Form, Complaint_Tenant, Complaint_Notes
-from .models import Complaint, Outlet, Update
-from django.utils import timezone
+from .forms import *
+from .models import *
+from .decorators import *
+
 from checklist.models import ChecklistScore
 
-from django.shortcuts import get_object_or_404
-
-from django.http import HttpResponse
-from django.forms import inlineformset_factory
 from django.contrib.auth.forms import UserCreationForm
 
 from django.contrib.auth import authenticate, login, logout, get_user_model
@@ -18,16 +15,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 
 # Create your views here.
-from .models import *
-from .forms import  CreateUserForm
-
-from .decorators import *
 
 from notification.tasks import update_notification
+import datetime
+from django.urls import reverse
 
-# Create your views here.
-def home(request):
-    return HttpResponse('Home Page')
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Staff'])
@@ -58,7 +50,7 @@ def create_complaint(request):
                 complaint.save()
                 update.save() 
                 
-                return redirect('homestaff')
+                return redirect(reverse('homestaff'))
             
     context['staff'] = request.user
             
@@ -68,6 +60,8 @@ def create_complaint(request):
     context['form_update'] = form2    
     form3 = Complaint_Form()
     context['form_complaint2'] = form3
+    context['min_date'] = str(datetime.date.today())
+    
             
     return render(request, 'create.html', context)
             
@@ -126,7 +120,7 @@ def view_tenant(request):
 
         #to change to filter out complaint against specific tenant
         complaints = Complaint.objects.filter(tenant = tenant).order_by('date_created')[::-1]
-        total_complaint =  len(complaints)
+        total_complaint = len(complaints)
         resolved = len(Complaint.objects.filter(tenant = tenant).filter(status='Resolved'))
         
         
@@ -230,7 +224,7 @@ def update_success(request):
                 n = notes.save(commit = False)
                 complaint.notes += "\n" + n.notes
                 complaint.save()
-                return redirect('/singhealth/successstaff')
+                return redirect(reverse('updatesuccesspage'))
             
         elif identity == "Tenant":
             action = "Rectification"
@@ -238,31 +232,20 @@ def update_success(request):
             u.edit_name = complaint.tenant.username
             u.save()
             update_notification("rectification", complaintId)
-            return redirect('/singhealth/successtenant')
+            return redirect(reverse('updatesuccesspage'))
             
     
     return render(request, 'error.html')
 
 @login_required(login_url='login')
-def success_staff(request):
+def update_success_page(request):
     context = {}
     update = Update.objects.order_by('date')[::-1][0]
-    userId = update.complaint.staff.username
+    userId = request.user.username
     context['userId'] = userId
     context['action'] = "Update"
     context['identity'] = request.user.groups.all()[0].name
-    return render(request, 'success.html', context)
-
-@login_required(login_url='login')
-def success_tenant(request):
-    context = {}
-    update = Update.objects.order_by('date')[::-1][0]
-    userId = update.complaint.tenant.username
-    context['userId'] = userId
-    context['action'] = "Rectification"
-    context['identity'] = request.user.groups.all()[0].name
-    return render(request, 'success.html', context)
-    
+    return render(request, 'success.html', context) 
 
 def registerPage(request):
 
