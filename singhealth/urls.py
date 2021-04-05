@@ -7,18 +7,14 @@ from django.conf.urls import url
 
 
 urlpatterns = [
-    path('home/', views.home),
     path('create/', views.create_complaint, name="create"),
-    # path('success/', views.create_success),
-    #path('login/', views.login),
     path('homestaff/', views.homestaff, name="homestaff"),
     path('hometenant/', views.hometenant, name="hometenant"),
-    path('viewtenant/', views.view_tenant),
-    path('viewcomplaint/', views.view_complaint),
-    path('update/', views.update),
-    path('updatesuccess/', views.update_success),
-    path('successstaff/', views.success_staff),
-    path('successtenant/', views.success_tenant),
+    path('viewtenant/', views.view_tenant, name="viewtenant"),
+    path('viewcomplaint/', views.view_complaint, name="viewcomplaint"),
+    path('update/', views.update, name="updatecomplaint"),
+    path('updatesuccess/', views.update_success, name="updatesuccess"),
+    path('updatesuccesspage/', views.update_success_page, name="updatesuccesspage"),
     url('favicon.ico', RedirectView.as_view(url = '/media/images/')),
     path('', views.loginPage, name="login"),  
     path('logout/', views.logoutUser, name="logout"),
