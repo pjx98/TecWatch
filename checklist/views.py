@@ -1,8 +1,7 @@
- 
 from django.shortcuts import render, redirect
-from .forms import AddItemForm, CheckboxForm, ScoreForm
-from .models import ChecklistItem, Checklist, ChecklistScore
-from django.forms import modelformset_factory
+from .forms import *
+from .models import *
+from .decorators import *
 
 from django.core.mail import send_mail, EmailMessage
 from django.contrib.auth import authenticate, login, logout, get_user_model
@@ -12,9 +11,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from tecwatch.settings import EMAIL_HOST_USER
-from .models import *
-import xlwt
-from .decorators import *
+
 import datetime
 from django.urls import reverse
 
@@ -40,21 +37,6 @@ def add_items(request):
     
     return render(request, 'add_item.html', context)
 
-@login_required(login_url='login')
-@allowed_users(allowed_roles=['Staff'])
-def checklist_home(request):
-    if request.method == "POST":
-        option = request.POST.get('option', 0)
-        if option == "new":
-            return redirect('/checklist/additems')
-        elif option == "fnb":
-            return redirect('/checklist/fnb')
-        elif option == "nonfnb":
-            return redirect('/checklist/nonfnb')
-        elif option == "audit":
-            return redirect('/checklist/calculate')
-        
-    return render(request, 'checklist_home.html')
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Staff'])
@@ -96,10 +78,10 @@ def update_checklist(request):
             form.save()
         
         if category == "fnb":
-            return redirect('/checklist/fnb')
+            return redirect(reverse('fnb'))
         
         elif category == "nonfnb":
-            return redirect('/checklist/nonfnb')
+            return redirect(reverse('nonfnb'))
     
     return render(request, 'view_checklist.html', context)
 
@@ -171,7 +153,5 @@ def calculate_score(request):
         context['checked'] = score_object.checked
         context['test'] = score_object.unchecked
         
-    return redirect('/singhealth/homestaff')
+    return redirect(reverse('homestaff'))
     
-
-
