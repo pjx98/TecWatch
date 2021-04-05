@@ -23,6 +23,8 @@ from .forms import  CreateUserForm
 
 from .decorators import *
 
+from notification.tasks import update_notification
+
 # Create your views here.
 def home(request):
     return HttpResponse('Home Page')
@@ -136,9 +138,6 @@ def view_tenant(request):
 def view_complaint(request):
     if request.method == "POST":
         context = {}
-        
-
-        
         try:
             identity = request.user.groups.all()[0].name
             complaintId = request.POST.get('complaintId', -1)
@@ -149,14 +148,12 @@ def view_complaint(request):
                 action = "Upload Rectification"            
             context['action'] = action
             
-       
         except:
-            
             complaintid = request.POST.get('resolveid', -1)
             complaint = Complaint.objects.get(id = complaintid)  
             complaint.status = 'Resolved' 
             complaint.save()
-            identity = "Staff"
+            update_notification("resolved", complaintid)
             
         #context['action'] = action
         updates = Update.objects.filter(complaint = complaint)
@@ -175,7 +172,6 @@ def update(request):
         context = {}
         
         identity = request.user.groups.all()[0].name
-        #identity = request.POST.get('identity', 0)
         complaintId = request.POST.get('updateid', -1)
         complaint = Complaint.objects.get(id = complaintId)
         form1 = Update_Form()
@@ -231,6 +227,7 @@ def update_success(request):
             userId = complaint.tenant.username
             u.edit_name = complaint.tenant.username
             u.save()
+            update_notification("rectification", complaintId)
             return redirect('/singhealth/successtenant')
             
     

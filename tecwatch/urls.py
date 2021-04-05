@@ -20,14 +20,22 @@ from django.http import HttpResponse
 from django.conf import settings
 from django.conf.urls.static import static
 
+from notification.tasks import send_notification, check_deadline
+
+
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('singhealth/', include('singhealth.urls')),
     path('checklist/', include ('checklist.urls')),
+    path('notification/', include ('notification.urls')),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+
+
+check_deadline(repeat_until=None, repeat=120)
+send_notification(repeat_until=None, repeat=120)

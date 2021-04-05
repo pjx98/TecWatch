@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
 from .models import *
+from checklist.models import ChecklistScore
 
 #DataFlair #File_Upload
 class Complaint_Form(forms.ModelForm):

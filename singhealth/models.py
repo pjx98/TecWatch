@@ -28,7 +28,6 @@ class Outlet(models.Model):
 
 class Complaint(models.Model):
     STATUS = (
-        ('Editing', 'Editing'),
         ('Open', 'Open'),
         ('Expired', 'Expired'),
         ('Resolved', 'Resolved'),

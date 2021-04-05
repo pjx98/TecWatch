@@ -24,13 +24,13 @@
                             <div class="col-2">
                                 <button type="button" class="btn btn-primary"><a href={% url 'homestaff' %}
                                         style="color:white">Return Home</a></button>
-                                <hr\>
+                                <hr>
                             </div>
                             <div class="col-12">
                                 <form action = "/singhealth/create/" method="POST" id = "complaintForm" enctype="multipart/form-data">
                                     {% csrf_token %}
                                     <table class="table">
-                                        {{ form_complaint1.as_table }}
+                                        {{ form_complaint1 }}
                                         
                                         <tr>
                                             <th>
@@ -41,9 +41,9 @@
                                             </td>
                                         </tr>
                                         
-                                        {{ form_update.as_table}}
+                                        {{ form_update}}
                                     
-                                        {{ form_complaint2.as_table }}
+                                        {{ form_complaint2 }}
                                     </table>
                                     <br>
                                 </form>

@@ -1,19 +1,23 @@
+ 
 from django.shortcuts import render, redirect
 from .forms import AddItemForm, CheckboxForm, ScoreForm
 from .models import ChecklistItem, Checklist, ChecklistScore
 from django.forms import modelformset_factory
 
-
+from django.core.mail import send_mail, EmailMessage
 from django.contrib.auth import authenticate, login, logout, get_user_model
 
 from django.contrib import messages
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
-
+from tecwatch.settings import EMAIL_HOST_USER
 from .models import *
-
+import xlwt
 from .decorators import *
+import datetime
+from django.urls import reverse
+
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Staff'])
@@ -103,6 +107,7 @@ def update_checklist(request):
 @allowed_users(allowed_roles=['Staff'])
 def audit(request):
     context = {}
+    tenant= None
     
     if request.method == "POST":
         tenantId = request.POST.get('tenantId', -1)
@@ -168,8 +173,5 @@ def calculate_score(request):
         
     return redirect('/singhealth/homestaff')
     
-    
-    
-    
 
-    
+
