@@ -13,6 +13,7 @@ from seleniumlogin import force_login
 from selenium.webdriver.support.ui import Select
 from singhealth.models import Complaint
 from checklist.models import Checklist, ChecklistItem
+import datetime
 
 # Create your tests here.
 
@@ -180,7 +181,7 @@ class seleniumTest(StaticLiveServerTestCase):
         
         #choose checklist
         select = Select(driver.find_element_by_name('checklist'))
-        select.select_by_visible_text('2021-03-26; Score: 2 (test_tenant)')
+        select.select_by_visible_text(str(datetime.date.today()) + '; Score: 2 (test_tenant)')
         time.sleep(2)
         
         # Input deadline field

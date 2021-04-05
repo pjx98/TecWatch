@@ -39,6 +39,12 @@ h2{
     color: #f7ba5b;
 }
 
+#idform{
+    background-color: transparent;
+    margin:0px;
+    padding: 0px;
+}
+
 form {
     background-color: #F5F5F5;
     margin-left: 15%;
@@ -52,3 +58,4 @@ form {
     border-radius: 5px;
     box-shadow: 5px 5px #D3D3D3;
 }
+

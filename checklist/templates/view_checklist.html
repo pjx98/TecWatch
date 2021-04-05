@@ -61,9 +61,15 @@
     </div>
     
     <button type="button" class="btn btn-primary" value="score" onClick="javascript:history.go(-1);">Back</button>
-    <br> <hr/> <br>
-    <button type="submit" class="btn" id="return" name="return"
-                value={{staff.username}} form="idForm">Return Home</button>
+    <form action="/singhealth/homestaff/" method="POST" id="idForm"
+            enctype="multipart/form-data">
+            {% csrf_token %}
+        <button type="submit" class="btn btn-primary" name="return"
+        value={{staff.username}} form="idForm">Return Home</button>
+        </form>
+    <br> <br>
+        
+    
     
     
     
