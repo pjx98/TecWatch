@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Perform Audit</title>
+    <link rel="stylesheet" href="C:/Users/minxuan/tecwatch/tecwatch/src/App.css">
+    
+</head>
+    
+<body>
+<center>
+    <h1>Perform Audit for {{tenant.username}}</h1>
+    <h2>Select relevant checklist</h2>
+    
+    <form action = "/checklist/audit/" method="POST" id = "checklistForm" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <input type="hidden" name="tenantId" value={{tenant.username}} form="checklistForm"/>
+        
+        
+        <button type="submit" id='fnb' form="checklistForm" value="fnb" name="checklist" > F and B</button> <br><br>
+        <button type="submit" form="checklistForm" value="nonfnb" name="checklist" > Non F and B</button>
+    
+    
+    </form>
+    <br><br>
+    
+    {% if form %}
+    
+    <h2>Select those that apply </h2>
+    
+     <form action = "/checklist/calculatescore/" method="POST" id = "scoreForm" enctype="multipart/form-data">
+        {% csrf_token %}
+         <table>
+            {{ form }}
+         
+         </table>
+         
+         <br><br>
+         
+        <input type="hidden" name="tenantId" value={{tenant.username}} form="scoreForm"/>
+        <button type="submit" form="scoreForm" value={{category}} name="category">Submit</button>
+    
+    
+    </form>
+    
+    {% endif %}
+    
+    {% if score %}
+    <h2>Calculated Score: </h2>
+    {{ score }}
+    {% endif %}
+    
+    <br><br>
+    <button type="button" value="score" onClick="javascript:history.go(-1);">Back</button>
+    
+    
+    
+</center>
+    
+    
+    
+</body>
+</html>
