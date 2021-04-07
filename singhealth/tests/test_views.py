@@ -6,8 +6,21 @@ from singhealth.models import Complaint
 from singhealth.views import *
 from django.urls import reverse
 from django.test.client import Client
+import random
+from django.contrib.auth import authenticate
+from django.http import HttpRequest
+from django.core import mail
+
+from importlib import import_module
+
+from django.contrib.auth import get_user_model, login, logout
+from django.http import HttpRequest
+from django.test import override_settings, TestCase
+from django.urls import reverse
 
 # python manage.py test singhealth.tests.test_views.loginInRequired
+
+@override_settings(AXES_ENABLED=False)
 class loginInRequired(TestCase):
     
     def setUp(self):
@@ -27,10 +40,14 @@ class loginInRequired(TestCase):
         staff.save()
         tenant.save()
         
+        #self.user.backend = "django.contrib.auth.backends.ModelBackend"
+        
+    # Test login_required decorator
     def test_login_required_staff_homepage(self):
         response = self.client.get(reverse("homestaff"))
         self.assertRedirects(response, '/singhealth/?next=/singhealth/homestaff/')
-        
+    
+    #Test login_required decorator
     def test_login_required_tenant_homepage(self):
         response = self.client.get(reverse("hometenant"))
         self.assertRedirects(response, '/singhealth/?next=/singhealth/hometenant/')
@@ -67,8 +84,12 @@ class loginInRequired(TestCase):
         self.assertEqual(response.status_code, 200)
         # Check if correct template is used
         self.assertTemplateUsed(response, 'home_tenant.html')
+        
+        
+    
 
 # python manage.py test singhealth.tests.test_views.PostMethod
+@override_settings(AXES_ENABLED=False)
 class PostMethod(TestCase):
     
     def setUp(self):
@@ -91,7 +112,6 @@ class PostMethod(TestCase):
         # Create complaint object
         test_complaint_form = Complaint.objects.create(status='Open',
                                                        subject='test_subject',
-                                                       score=5,
                                                        deadline='2020-04-12',
                                                        date_created='2020-04-01',
                                                        notes='test_notes',
@@ -107,7 +127,7 @@ class PostMethod(TestCase):
         login = self.client.login(username='staff', password='~1qaz2wsx')
         
         # send in POST request
-        response = self.client.post(reverse('view_complaint'),data={"complaintId": 1})
+        response = self.client.post(reverse('viewcomplaint'),data={"complaintId": 1})
         
         # Check if staff is logged in
         self.assertEqual(str(response.context['user']), 'staff')
@@ -127,7 +147,7 @@ class PostMethod(TestCase):
         login = self.client.login(username='tenant', password='~1qaz2wsx')
         
         # send in POST request
-        response = self.client.post(reverse('view_complaint'),data={"complaintId": 1})
+        response = self.client.post(reverse('viewcomplaint'),data={"complaintId": 1})
         
         # Check if tenant is logged in
         self.assertEqual(str(response.context['user']), 'tenant')
@@ -140,4 +160,13 @@ class PostMethod(TestCase):
         #check tenant action field 
         action_field = (response.context['action'])
         self.assertEqual("Upload Rectification", action_field)
-        
+
+            
+#python manage.py test singhealth.tests.test_views.EmailTest
+class EmailTest(TestCase):
+    def test_send_email(self):
+        mail.send_mail('Subject here', 'Here is the message.',
+            'from@example.com', ['to@example.com'],
+            fail_silently=False)
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertEqual(mail.outbox[0].subject, 'Subject here')
