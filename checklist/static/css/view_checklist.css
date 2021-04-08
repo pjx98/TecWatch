@@ -39,9 +39,10 @@ form {
     display: inline-block;
     font-size: 16px;
 }
-.btn-primary: hover {
-    background-color: #fff;
+.btn-primary:hover {
     color: #5961F7;
+    background-color: #fff;
+    
 }
 
 
@@ -54,7 +55,9 @@ form {
     background-color: #FFBD44;
 }
 #returnbutton:hover {
-    border-color: transparent;
+    color:#FFBD44;
+    background-color: #fff;
+    border-color: #FFBD44;
 }
 
 
