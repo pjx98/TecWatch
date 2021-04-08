@@ -13,6 +13,17 @@ h2{
     color:#5961F7;
 }
 
+.table {
+    border:0px;
+}
+
+.table td {
+    padding: 0px;
+    text-align: middle;
+    vertical-align:middle;
+}
+
+
 form {
     background-color: #F5F5F5;
     margin-left: 15%;
@@ -26,6 +37,16 @@ form {
     border-radius: 5px;
     box-shadow: 5px 5px #D3D3D3;
 }
+
+input {
+    max-width: 100%; 
+    max-height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow:hidden;
+}
+
+
 
 .btn-primary {
     transition-duration: 0.2s;
@@ -45,7 +66,6 @@ form {
     
 }
 
-
 #returnform{
     background-color: transparent !important;
     box-shadow: none !important;
@@ -59,9 +79,6 @@ form {
     background-color: #fff;
     border-color: #FFBD44;
 }
-
-
-
 
 #additembtn {
     background-color: #5961F7;

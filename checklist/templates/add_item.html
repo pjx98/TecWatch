@@ -11,27 +11,27 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/add_item.css' %}">
+    <link rel="stylesheet" href="{% static "css/add_item.css"%}">
 </head>
     
 <body>
 <center>
-    <h1>Add Checklist Items</h1>
-    <form action = "/checklist/additems/" method="POST" id = "itemForm" enctype="multipart/form-data">
-        {% csrf_token %}
-        <table>
+    <div class="col-12">
+        <h1>Add Checklist Items</h1>
+        <form action = "/checklist/additems/" method="POST" id = "itemForm" enctype="multipart/form-data">
+            {% csrf_token %}
             
-            {{form}}
-            
+            <table class="table">
+                {{form}}
+                
+            </table>
+            <hr>
+            <br>
+            <button type="submit" name='submit_description' id="additembtn" form="itemForm">Add more items</button>  
         
-        </table>
-        <br>
-        <br>
-        <button type="submit" name='submit_description' id="additembtn" form="itemForm">Add more items</button>  
-    
-    
-    </form>
-    
+        
+        </form>
+    </div>
     <br><br><hr>
     
     <h1>List of Checklist Items so far: <br> </h1>
@@ -47,10 +47,10 @@
     <button type="submit" name='back' value="score" onClick="javascript:history.go(-1);">Back</button>
     
     <div class="col-12 text-center">
-        <form action="/singhealth/homestaff/" method="POST" id="idForm"
+        <form action="/singhealth/homestaff/" method="POST" id="returnform"
             enctype="multipart/form-data">
             {% csrf_token %}
-            <button type="submit" class="btn btn-primary" name="return"
+            <button type="submit" class="btn btn-primary" name="return" id="returnbutton"
                 value={{staff.username}} form="idForm">Return Home</button>
 
 
