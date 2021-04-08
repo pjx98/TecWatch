@@ -1,0 +1,43 @@
+body {
+    background-color: #E1DFE1;
+}
+
+table {
+    background-color: #F5F5F5 !important;
+    border-radius: 15px;
+    box-shadow: 5px 5px #D3D3D3;
+}
+
+.btn-danger {
+    background-color: #FF605C;
+    border-color: transparent;
+}
+
+.table td {
+    vertical-align:middle;
+    text-align:left;
+    padding: 4%;
+}
+
+.btn-primary {
+    transition-duration: 0.2s;
+    background-color: #5961F7;
+    border-color: transparent;
+    border-radius: 10px;
+    color: white;
+    padding: 10px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+.btn-primary:hover {
+    background-color: #fff;
+    color: #5961F7;
+}
+.btn-primary:hover > a {color: #5961F7 !important;}
+
+.fa-home {
+    padding: 20%;
+}
+
