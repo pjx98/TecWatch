@@ -1,0 +1,24 @@
+button {
+    transition-duration: 0.2s;
+    background-color: #FFBD44;
+    border-color: transparent;
+    border-radius: 10px;
+    color: white;
+    padding: 10px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size:1.5em;
+}
+button:hover {
+    color: #FFBD44;
+    background-color: #fff;
+}
+
+#backbtn {
+    background-color: #5961F7;
+}
+#backbtn:hover {
+    color: #5961F7;
+    background-color: #fff;
+}

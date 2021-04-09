@@ -8,13 +8,16 @@
         integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/view_audit.css' %}">
+    <link rel="stylesheet" href="{% static 'css/audit.css' %}">
     
 </head>
     
 <body>
 <center>
+<br><br>
     <h1>Perform Audit for {{tenant.username}}</h1>
     <h2>Select relevant checklist</h2>
     
@@ -58,7 +61,7 @@
     {% endif %}
     
     <br><br>
-    <button type="button" value="score" onClick="javascript:history.go(-1);">Back</button>
+    <button type="button" id="backbtn" value="score" onClick="javascript:history.go(-1);">Back</button>
     
     
     

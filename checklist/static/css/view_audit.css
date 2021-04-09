@@ -1,5 +1,6 @@
 body {
     background-color: #E1DFE1;
+    font-size:1.5em;
 }
 
 h1 {
@@ -13,6 +14,7 @@ h2{
 }
 
 .btn-primary {
+    font-size: 1.25em;
     transition-duration: 0.2s;
     background-color: #5961F7;
     border-color: transparent;
@@ -61,8 +63,6 @@ h2{
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
-
     background-color: #00CA4E;
 }
 #exportbtn:hover {
