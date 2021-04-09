@@ -18,21 +18,21 @@
 <center>
     <div class="col-12">
         <h1>Add Checklist Items</h1>
+        <br>
         <form action = "/checklist/additems/" method="POST" id = "itemForm" enctype="multipart/form-data">
             {% csrf_token %}
             
-            <table class="table">
+            <table>
                 {{form}}
                 
             </table>
-            <hr>
             <br>
             <button type="submit" name='submit_description' id="additembtn" form="itemForm">Add more items</button>  
         
         
         </form>
     </div>
-    <br><br><hr>
+    <br>
     
     <h1>List of Checklist Items so far: <br> </h1>
     

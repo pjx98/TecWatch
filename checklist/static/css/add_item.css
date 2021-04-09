@@ -13,14 +13,8 @@ h2{
     color:#5961F7;
 }
 
-.table {
-    border:0px;
-}
-
-.table td {
-    padding: 0px;
-    text-align: middle;
-    vertical-align:middle;
+label.description {
+    padding-right: 10px;
 }
 
 
@@ -82,4 +76,14 @@ input {
 
 #additembtn {
     background-color: #5961F7;
+    transition-duration: 0.2s;
+    background-color: #5961F7;
+    border-color: transparent;
+    border-radius: 10px;
+    color: white;
+    padding: 10px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
 }
