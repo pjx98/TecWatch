@@ -1,0 +1,47 @@
+body {
+    background-color: #E1DFE1;
+}
+
+h1 {
+    color: black;
+    background-color: #C0BFC0;
+    padding: 10%;
+}
+
+h2{
+    margin: 5%;
+    color:#5961F7;
+}
+
+.btn-primary {
+    transition-duration: 0.2s;
+    background-color: #5961F7;
+    border-color: transparent;
+    border-radius: 10px;
+    color: white;
+    padding: 10px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+.btn-primary:hover {
+    color: #5961F7;
+    background-color: #fff;
+    
+}
+
+
+#returnform{
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+#returnbutton {
+    background-color: #FFBD44;
+}
+#returnbutton:hover {
+    color:#FFBD44;
+    background-color: #fff;
+    border-color: #FFBD44;
+}

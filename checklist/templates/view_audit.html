@@ -7,20 +7,26 @@
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
         integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
-    <link rel='stylesheet' href="./assets/css/style.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/view_audit.css' %}">
 </head>
 
 <body>
+<center>
+    <h1>{{ tenant.username }} </h1>
     <div class="container h-100">
         <div class="d-flex justify-content-center h-100">
+        
             <div class="user_card" style="width: 750px;">
                 <div class="row">
+                
                     <div class="col-12">
                         <div class="row">
+                        
                             <div class="col-12 text-center">
-                                <h1>{{ tenant.username }} </h1>
                                 <h2>Audit History: </h2>
                                 <hr />
                             </div>
@@ -39,7 +45,6 @@
                                     <button type="submit" class="btn btn-primary" name="tenantId" value={{tenant.username}} form="makeEmailForm">Export to email</button> <br><br>
                                 </form>
                             </div>
-                            <div  class="row">
 
                             <div class="col-12 text-center">
                                 <p>
@@ -82,18 +87,19 @@
                                 </p>
                             </div>
                             <div class="col-12 text-center">
-                                <form action="/singhealth/homestaff/" method="POST" id="idForm"
+                                <form action="/singhealth/homestaff/" method="POST" id="returnform"
                                     enctype="multipart/form-data">
                                     {% csrf_token %}
-                                    <button type="submit" name='return' class="btn btn-primary" form="idForm">Return Home</button>
+                                    <button type="submit" name='return' class="btn btn-primary" id="returnbutton" form="idForm">Return Home</button>
 
                                 </form>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+</center>
 </body>
 </html>

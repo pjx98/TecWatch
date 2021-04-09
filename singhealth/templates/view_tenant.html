@@ -7,9 +7,11 @@
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
         integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
-    <link rel='stylesheet' href="./assets/css/style.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="shortcut icon" href="#">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/view_tenant.css' %}">
 </head>
 
 <body>
@@ -20,6 +22,7 @@
                     <div class="col-12">
                         <div class="row">
                             <div class="col-12 text-center">
+                                <br>
                                 <h1>{{ tenant.username }} </h1>
                                 <h2>Complaint Records: </h2>
                                 {% if total_complaint != 0 %}
@@ -35,41 +38,40 @@
                                 {% endif %}
                                 <hr />
                             </div>
-                            <div class="col-12 text-center">
+                            <div class="col-12 text-center" id="complaintdiv">
                                 <p>
                                     {% for com in complaints %}
                                     <strong>Complaint id:</strong> {{com.id}}<br>
                                     <strong>Tenant Involved:</strong> {{com.tenant.username}} <br>
                                     <strong>Subject: </strong>{{com.subject}} <br>
                                     <strong>Status:</strong> {{com.status}} <br>
-
-                                <form action="/singhealth/viewcomplaint/" method="POST" id="viewComplaintForm"
+                                
+                               <form action="/singhealth/viewcomplaint/" method="POST" id="viewComplaintForm"
                                     enctype="multipart/form-data">
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-primary" name="complaintId" value={{com.id}}
                                         form="viewComplaintForm">View more details</button>
-                                </form> <br><br>
-
+                                </form>
                                 <hr>
-
                                 {% empty %}
                                 You have not made any complaints
                                 {% endfor %}
-
+                                
                                 </p>
                             </div>
+                            
                             <div class="col-12 text-center">
+                            <br>
                                 <form action="/singhealth/homestaff/" method="POST" id="idForm"
                                     enctype="multipart/form-data">
                                     {% csrf_token %}
                                     <table>
                                         {{ form.as_table }}
                                     </table>
-                                    <button type="submit" class="btn btn-primary" name="loginId"
+                                    <button type="submit" class="btn btn-primary" id="returnbutton" name="loginId"
                                         value={{staff.username}} form="idForm">Return Home</button>
-
-
                                 </form>
+                            <br>
                             </div>
                         </div>
                     </div>
