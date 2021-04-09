@@ -7,7 +7,9 @@
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
         integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
-
+    
+    <link rel="shortcut icon" href="#">
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     
     {% load static %}
@@ -16,19 +18,27 @@
     
 <body>
 <center>
+    <h1>Add Checklist Items</h1>
+
     <div class="col-12">
-        <h1>Add Checklist Items</h1>
+
         <br>
+
         <form action = "/checklist/additems/" method="POST" id = "itemForm" enctype="multipart/form-data">
             {% csrf_token %}
             
             <table>
-                {{form}}
-                
+                <tr>
+                    <th>
+                    <label for="id_description" id="descid">Description:</label>
+                    </th>
+                    <td>
+                    {{form.description}}
+                    </td>
+                </tr>
             </table>
             <br>
             <button type="submit" name='submit_description' id="additembtn" form="itemForm">Add more items</button>  
-        
         
         </form>
     </div>
@@ -36,32 +46,29 @@
     
     <h1>List of Checklist Items so far: <br> </h1>
     
+    <form>
     {% for i in items %}
         {{i.description}} <br>
     
     {% empty %}
     
     {% endfor %}
-    
-    <br><br>
-    <button type="submit" name='back' value="score" onClick="javascript:history.go(-1);">Back</button>
+    </form>
+    <hr>
+    <button type="submit" class="btn btn-primary" name='back' value="score" onClick="javascript:history.go(-1);">Back</button>
     
     <div class="col-12 text-center">
+
         <form action="/singhealth/homestaff/" method="POST" id="returnform"
             enctype="multipart/form-data">
             {% csrf_token %}
             <button type="submit" class="btn btn-primary" name="return" id="returnbutton"
                 value={{staff.username}} form="idForm">Return Home</button>
-
-
         </form>
+
     </div>
     
     
-    
 </center>
-    
-    
-    
 </body>
 </html>

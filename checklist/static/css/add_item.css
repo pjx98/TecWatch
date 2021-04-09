@@ -13,9 +13,6 @@ h2{
     color:#5961F7;
 }
 
-label.description {
-    padding-right: 10px;
-}
 
 
 form {
@@ -33,14 +30,17 @@ form {
 }
 
 input {
-    max-width: 100%; 
     max-height: 100%;
     margin: 0px;
     padding: 0px;
     overflow:hidden;
+    width: calc(100% - 20px);
 }
 
-
+th {
+    padding-right: 15px;
+    text-align: left;
+}
 
 .btn-primary {
     transition-duration: 0.2s;
@@ -74,9 +74,6 @@ input {
     border-color: #FFBD44;
 }
 
-#id_description{
-    box-sizing: border-box;
-}
 
 #additembtn {
     background-color: #5961F7;
@@ -90,4 +87,9 @@ input {
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+}
+#additembtn:hover {
+    color: #5961F7;
+    background-color: #fff;
+    
 }
