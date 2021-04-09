@@ -7,11 +7,11 @@
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
         integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
-    <link rel='stylesheet' href="./assets/css/style.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
     {% load static %}
-    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="{% static 'css/view_tenant.css' %}">
 
 </head>
 
@@ -22,20 +22,22 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="row">
+                        
                             <div class="offset-2 col-8 text-center">
+                                <br>
                                 <h1>{{title}}: {{complaint.subject}}</h1>
                                 <hr />
                             </div>
                             
                             {% if identity == "Staff" %}
                             <div class="col-2">
-                                <button type="button" class="btn btn-primary"><a href={% url 'homestaff' %}
+                                <button type="button" class="btn btn-primary" id="returnbutton"><a href={% url 'homestaff' %}
                                         style="color:white">Return Home</a></button>
                             </div>
                             
                             {% elif identity == "Tenant" %}
                             <div class="col-2">
-                                <button type="button" class="btn btn-primary"><a href={% url 'hometenant' %}
+                                <button type="button" class="btn btn-primary" id="returnbutton"><a href={% url 'hometenant' %}
                                         style="color:white">Return Home</a></button>
                             </div>
                             
@@ -46,19 +48,20 @@
                                     enctype="multipart/form-data">
                                     {% csrf_token %}
                                     <input type="hidden" name="identity" value={{identity}} form="updateForm" />
-                                    <table>
+                                    <table class="center">
 
                                         {{ form_update.as_table}}
                                         {{ form_notes.as_table}}
 
                                     </table>
-                                    <button type="submit" class="btn btn-primary" name="comId" value={{complaint.id}}
+                                    <button type="submit" class="btn btn-primary" name="comId" id="updatecomplaintbtn" value={{complaint.id}}
                                         form="updateForm">Update Complaint</button>
                                 </form>
                                 <hr />
                             </div>
                             <div class="col-12 text-center">
                                 <h1>Past Details </h1>
+                                <div class="pastdetails">
                                 <p>
                                     {% if identity == "Staff" %}
                                     Tenant Involved: {{complaint.tenant.username}} <br>
@@ -83,6 +86,7 @@
 
                                     {% endfor %}
                                 </p>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -35,7 +35,7 @@
                         {% elif identity == "Tenant" %}
                         <form action="/singhealth/hometenant/" method="POST" id="idForm" enctype="multipart/form-data">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-primary" name="loginId"
+                            <button type="submit" class="btn btn-primary" id="returnbutton" name="loginId"
                                 value={{complaint.tenant.username}} form="idForm">Return Home</button>
                         </form>
 
