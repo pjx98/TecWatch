@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+
+<head>
+    <title>{{ tenant.username }}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+        integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/view_audit.css' %}">
+</head>
+
+<body>
+<center>
+<br>
+    <h1>{{ tenant.username }} </h1>
+    <div class="container h-100">
+        <div class="d-flex justify-content-center h-100">
+        
+            <div class="user_card" style="width: 750px;">
+                <div class="row">
+                
+                    <div class="col-12">
+                        <div class="row">
+                        
+                            <div class="col-12 text-center">
+                                <h2>Audit History: </h2>
+                                <hr />
+                            </div>
+                            
+                            <div class="col-12 text-center">
+                                <form action="/checklist/audit/" method="GET" id="makeauditForm"
+                                    enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary" form="makeauditForm" name="tenantId" value={{tenant.username}}>New Audit</button> <br><br>
+                                </form>
+                            </div>
+                            <div class="col-12 text-center">
+                                <form action="/notification/send_email/" method="POST" id="makeEmailForm"
+                                    enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary" name="tenantId" value={{tenant.username}} form="makeEmailForm">Export to email</button> <hr>
+                                </form>
+                            </div>
+                            <div class="col-12 text-center" id="auditfields">
+                                <p>
+                                    
+                                    {% for a in audits %}
+                                    <br>
+                                    <strong>Date of Audit:</strong> {{a.date_created}}<br>
+                                    <strong>Tenant Involved:</strong> {{a.tenant.username}} <br><br>
+                                    <strong>Satisfactory Fields: </strong> <br>
+                                    {% for c in a.checked %} 
+                                    {{c}} <br>
+                                    {% endfor %}
+
+                                    <br>
+                                    <strong>Unsatisfactory Fields: </strong><br>
+                                    {% for u in a.unchecked %} 
+                                    {{u}} <br>
+                                    {% endfor %}
+                                    {% comment %} 
+                                    <br>{{a.unchecked}} <br><hr> {% endcomment %}
+                                    <br>
+                                    <strong>Total Score:</strong> {{a.score}} <br><br>
+                                    
+                                    <form name="export_to_excel"  method="POST" action="{% url 'export-excel' %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name='auditId' value={{a.id}}/>     
+                                        <input type="submit" id="exportbtn" value= 'Export Excel' />
+                                    </form>
+                                    <br>
+                                <hr>
+
+                                {% empty %}
+                                {{tenant.username}} has no audits
+                                {% endfor %}
+
+                                </p>
+                            </div>
+                            
+                            <div class="col-12 text-center">
+                            <br>
+                                <form action="/singhealth/homestaff/" method="POST" id="returnform"
+                                enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary" name="return"id="returnbutton"
+                                value={{staff.username}} form="idForm">Return Home</button>
+                                </form>   
+                            <br>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</center>
+</body>
+</html>

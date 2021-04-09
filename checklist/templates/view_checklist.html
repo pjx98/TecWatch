@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% if category == 'fnb' %}
+                F &amp B Checklist
+            {%elif category == 'nonfnb' %}
+                Non F &amp B Checklist
+            {% endif %}
+    </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+        integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/view_checklist.css' %}">
+    
+</head>
+    
+<body>
+<center>
+    <h1>{% if category == 'fnb' %}
+                F &amp B Checklist
+            {%elif category == 'nonfnb' %}
+                Non F &amp B Checklist
+            {% endif %}
+    </h1>
+    <h2>Select checklist items</h2>
+    
+    <form action = "/checklist/update/" method="POST" id = "updateForm" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            
+            {{form}}
+            
+        
+        </table>
+        <input type="hidden" form="updateForm" value={{category}} name="category" />
+        <button type="submit" name='update'  class="btn btn-primary"form="updateForm">Update checklist</button>  
+    </form>
+    
+    <hr/>
+
+    <h1>List of items in checklist so far:</h1>
+    <br>
+   
+    <div class="col-12 text-center">   
+        <form action="/singhealth/homestaff/" method="POST" id="idForm"
+            enctype="multipart/form-data">
+            {% for i in items %}
+            {{i.description}} <br>
+            
+            {% empty %}
+            
+            {% endfor %}
+            {% csrf_token %}
+        </form>
+    </div>
+    <hr/>
+    <button type="button" class="btn btn-primary" value="score" onClick="javascript:history.go(-1);">Back</button>
+    
+    <br>
+
+    <form action="/singhealth/homestaff/" method="POST" id="returnform"
+            enctype="multipart/form-data">
+            {% csrf_token %}
+        <button type="submit" class="btn btn-primary" name="return"id="returnbutton"
+        value={{staff.username}} form="idForm">Return Home</button>
+        </form>   
+    
+    
+    
+    
+</center>
+    
+    
+    
+</body>
+</html>

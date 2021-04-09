@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+
+<head>
+    <title>Staff Homepage</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+        integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+        
+   
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="shortcut icon" href="#">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+
+<body>
+    <div class="container h-100">
+        <div class="d-flex justify-content-center h-100">
+            <div class="user_card" style="width: 750px;">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="offset-2 col-8 text-center">
+                                <br>
+                                <h1>Welcome {{staff}}!</h1><br>
+                            </div>
+                            <div class="col-2">
+                                <button type="button" class="btn btn-danger" name='logout_btn'><a href={% url 'logout' %}
+                                        style="color:white">Log
+                                        Out</a></button>
+                            </div>
+                            <div class="col-12 text-center">
+                                <h5>You can create a new complaint or view all complaints you have made</h5><br>
+                                <button type="button" name="create_complaint_btn" class="btn btn-primary"><a href={% url 'create' %}
+                                        style="color:white">Create a new complaint</a></button>
+                                <hr />
+                            </div>
+                            
+                            
+                            
+                            
+                            <div class="col-12">
+                                <h2 class="text-center">Checklist Options</h2> <hr/>
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <button type="button" name="add_items_btn" class="btn btn-primary"><a href='/checklist/additems'
+                                        style="color:white">Add items to checklist</a></button>
+                                        <br><br>
+                                        <button type="button" name="update_fnb_btn" class="btn btn-primary"><a href='/checklist/fnb'
+                                        style="color:white">Update F and B checklist</a></button>
+                                        <br><br>
+                                        <button type="button" name="update_nonfnb_btn" class="btn btn-primary"><a href='/checklist/nonfnb'
+                                        style="color:white">Update Non F and B checklist</a></button>
+                                        <hr />
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            
+                            
+                            
+                            
+                            
+                            <div class="col-12">
+                                <h2 class="text-center">All Tenants</h2>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <table class="table">
+                                            <tbody>
+                                                {% for t in tenants %}
+                                                <tr>
+                                                    <th scope="row" style="vertical-align: middle;">
+                                                        <i class="fas fa-home"></i>
+                                                    </th>
+                                                    <td> 
+                                                        <p>Name: {{t.username}}</p>
+                                                        <p>Outlet: {{t.groups.all.1.name}}</p>
+                                                    </td>
+                                                    <td>
+                                                        <div class="col-12 text-center" >
+                                                            <form action="/singhealth/viewtenant/" method="POST"
+                                                                id="viewTenantForm" enctype="multipart/form-data">
+                                                                {% csrf_token %}
+                                                                <button class="btn btn-primary" type="submit"
+                                                                    name="complaint" value={{t.username}}
+                                                                    form="viewTenantForm">View related
+                                                                    complaints</button>
+                                                                <br><br>
+                                                                <button class="btn btn-primary" type="submit" name="audit" value={{t.username}} formaction="/checklist/viewaudits/" formenctype="multipart/form-data" formmethod="get">View audits
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                {% empty %}
+                                                <div class="col-12 text-center">There are no tenants registered</div>
+                                                {% endfor %}
+                                            </tbody>
+                                            </td>
+                                        </table>
+                                        <hr />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                
+                
+                
+
+                        <div class="col-12 text-center">
+                            <h2>Your complaints</h2>
+                        
+                            <div class="row">
+                                <div class="col-12">
+                                    <table class="table">
+                                        <tbody>
+                                            {% for com in complaints %}
+                                            <tr>
+                                                <th scope="row" style="vertical-align: middle;">
+                                                    <i class="fas fa-home"></i>
+                                                </th>
+                                                <td>
+                                                    <p>Complaint id: {{com.id}}</p>
+                                                    <p>Tenant Involved: {{com.tenant.username}}</p>
+                                                    <p>Subject: {{com.subject}} </p>
+                                                    <p>Status: {{com.status}}</p>
+                                                </td>
+                                                <td>
+                                                    <div class="col-12 text-center">
+                                                        <form action="/singhealth/viewcomplaint/" method="POST"
+                                                            id="viewComplaintForm" enctype="multipart/form-data">
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="identity" value="staff"
+                                                                form="viewComplaintForm" />
+                                                            <button class="btn btn-primary "  type="submit" name="complaintId"
+                                                                value={{com.id}} form="viewComplaintForm">View more
+                                                                details</button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {% empty %}
+                                            <div class="col-12 text-center">You have not made any complaints</div>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    <hr />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
