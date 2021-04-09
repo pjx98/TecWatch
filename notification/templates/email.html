@@ -16,12 +16,14 @@
     <link rel="shortcut icon" href="#">
 
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/email.css' %}"
+    <link rel="stylesheet" href="{%static "css/email.css"%}">
 
 </head>
 
 <body>
+    <center><h1>Export to Email </h1></center>
     <div class="col-lg-4 block-border">
+    
         <form action="/notification/click_mail/" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">
@@ -61,5 +63,6 @@
             </form>
         </div>
     </div>
+
 </body>
 </html>
