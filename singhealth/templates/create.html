@@ -6,9 +6,13 @@
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
         integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
-    <link rel='stylesheet' href="./assets/css/style.css">
+    
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/create.css' %}">
 </head>
     
 <body>
@@ -20,12 +24,14 @@
                         <div class="row">
                             <div class="offset-2 col-8 text-center">
                                 <h1>Create Complaint</h1>
-                            </div>                            
+                           <hr>
+                           </div>      
+                                             
                             <div class="col-2">
-                                <button type="button" class="btn btn-primary"><a href={% url 'homestaff' %}
-                                        style="color:white">Return Home</a></button>
-                                <hr>
+                                <button type="button" class="btn btn-danger"><a href={% url 'homestaff' %}
+                                        style="color:white">Return Home</a></button>   
                             </div>
+                            
                             <div class="col-12">
                                 <form action = "/singhealth/create/" method="POST" id = "complaintForm" enctype="multipart/form-data">
                                     {% csrf_token %}

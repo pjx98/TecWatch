@@ -1,0 +1,72 @@
+body {
+    background-color: #E1DFE1;
+    font-size:1.25em;
+}
+
+h1 {
+    color: black;
+}
+
+h2{
+    margin: 5%;
+    color:#5961F7;
+    font-weight: bold;
+}
+
+.btn-primary {
+    font-size: 1.25em;
+    transition-duration: 0.2s;
+    background-color: #5961F7;
+    border-color: transparent;
+    border-radius: 10px;
+    color: white;
+    padding: 10px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+.btn-primary:hover {
+    color: #5961F7;
+    background-color: #fff;
+    
+}
+
+#auditfields{
+    background-color: #F5F5F5;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    border-radius: 5px;
+    box-shadow: 5px 5px #D3D3D3;
+}
+
+#returnform{
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+#returnbutton {
+    background-color: #FFBD44;
+}
+#returnbutton:hover {
+    color:#FFBD44;
+    background-color: #fff;
+    border-color: #FFBD44;
+}
+
+#exportbtn {
+    font-weight: bold;
+    transition-duration: 0.2s;
+    border-color: transparent;
+    border-radius: 10px;
+    color: white;
+    padding: 10px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    background-color: #00CA4E;
+}
+#exportbtn:hover {
+    color:#00CA4E;
+    background-color: #fff;
+    border-color: #00CA4E;
+}

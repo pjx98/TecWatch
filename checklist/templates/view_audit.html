@@ -7,20 +7,27 @@
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
         integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
-    <link rel='stylesheet' href="./assets/css/style.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/view_audit.css' %}">
 </head>
 
 <body>
+<center>
+<br>
+    <h1>{{ tenant.username }} </h1>
     <div class="container h-100">
         <div class="d-flex justify-content-center h-100">
+        
             <div class="user_card" style="width: 750px;">
                 <div class="row">
+                
                     <div class="col-12">
                         <div class="row">
+                        
                             <div class="col-12 text-center">
-                                <h1>{{ tenant.username }} </h1>
                                 <h2>Audit History: </h2>
                                 <hr />
                             </div>
@@ -36,17 +43,16 @@
                                 <form action="/notification/send_email/" method="POST" id="makeEmailForm"
                                     enctype="multipart/form-data">
                                     {% csrf_token %}
-                                    <button type="submit" class="btn btn-primary" name="tenantId" value={{tenant.username}} form="makeEmailForm">Export to email</button> <br><br>
+                                    <button type="submit" class="btn btn-primary" name="tenantId" value={{tenant.username}} form="makeEmailForm">Export to email</button> <hr>
                                 </form>
                             </div>
-                            <div  class="row">
-
-                            <div class="col-12 text-center">
+                            <div class="col-12 text-center" id="auditfields">
                                 <p>
                                     
                                     {% for a in audits %}
+                                    <br>
                                     <strong>Date of Audit:</strong> {{a.date_created}}<br>
-                                    <strong>Tenant Involved:</strong> {{a.tenant.username}} <br>
+                                    <strong>Tenant Involved:</strong> {{a.tenant.username}} <br><br>
                                     <strong>Satisfactory Fields: </strong> <br>
                                     {% for c in a.checked %} 
                                     {{c}} <br>
@@ -57,22 +63,17 @@
                                     {% for u in a.unchecked %} 
                                     {{u}} <br>
                                     {% endfor %}
-
-                                    <br>{{a.unchecked}} <br>
-                                    <strong>Total Score:</strong> {{a.score}} <br>
+                                    {% comment %} 
+                                    <br>{{a.unchecked}} <br><hr> {% endcomment %}
+                                    <br>
+                                    <strong>Total Score:</strong> {{a.score}} <br><br>
                                     
-                                    <form name="export_to_excel" method="POST" action="{% url 'export-excel' %}">
+                                    <form name="export_to_excel"  method="POST" action="{% url 'export-excel' %}">
                                         {% csrf_token %}
                                         <input type="hidden" name='auditId' value={{a.id}}/>     
-                                        <input type="submit" value= 'Export Excel' />
+                                        <input type="submit" id="exportbtn" value= 'Export Excel' />
                                     </form>
-                                    
-
-                                    
-                                    
-                                    
-                                    <br><br>
-
+                                    <br>
                                 <hr>
 
                                 {% empty %}
@@ -81,19 +82,23 @@
 
                                 </p>
                             </div>
+                            
                             <div class="col-12 text-center">
-                                <form action="/singhealth/homestaff/" method="POST" id="idForm"
-                                    enctype="multipart/form-data">
-                                    {% csrf_token %}
-                                    <button type="submit" name='return' class="btn btn-primary" form="idForm">Return Home</button>
-
-                                </form>
+                            <br>
+                                <form action="/singhealth/homestaff/" method="POST" id="returnform"
+                                enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary" name="return"id="returnbutton"
+                                value={{staff.username}} form="idForm">Return Home</button>
+                                </form>   
+                            <br>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+</center>
 </body>
 </html>

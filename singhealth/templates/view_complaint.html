@@ -7,9 +7,13 @@
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
         integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
-    <link rel='stylesheet' href="./assets/css/style.css">
+
+    <link rel="shortcut icon" href="#">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/view_tenant.css' %}">
 </head>
 
 <body>
@@ -17,12 +21,13 @@
         <div class="d-flex justify-content-center h-100">
             <div class="user_card" style="width: 750px;">
                 <div class="row">
-                    <div class="col-12 text-center">
+                    <div class="col-12 text-center" >
+                    <br>
                         {% if identity == "Staff" %}
 
                         <form action="/singhealth/homestaff/" method="POST" id="idForm" enctype="multipart/form-data">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-primary" name="loginId"
+                            <button type="submit" class="btn btn-primary" id="returnbutton" name="loginId"
                                 value={{complaint.staff.username}} form="idForm">Return Home</button>
 
                         </form>
@@ -30,14 +35,14 @@
                         {% elif identity == "Tenant" %}
                         <form action="/singhealth/hometenant/" method="POST" id="idForm" enctype="multipart/form-data">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-primary" name="loginId"
+                            <button type="submit" class="btn btn-primary" id="returnbutton" name="loginId"
                                 value={{complaint.tenant.username}} form="idForm">Return Home</button>
                         </form>
 
                         {% endif %}
                         <hr />
                     </div>
-                    <div class="col-12">
+                    <div class="col-12" id="complaintdiv">
                         <div class="row">
                             <div class="col-12 text-center">
                                 <h1>{{ complaint.subject }} </h1>
