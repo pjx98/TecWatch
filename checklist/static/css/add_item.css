@@ -74,6 +74,12 @@ input {
     border-color: #FFBD44;
 }
 
+#id_description{
+    overflow: hidden;
+    max-width: 50%;
+    max-height: 50%;
+}
+
 #additembtn {
     background-color: #5961F7;
     transition-duration: 0.2s;
