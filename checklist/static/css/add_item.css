@@ -75,9 +75,7 @@ input {
 }
 
 #id_description{
-    overflow: hidden;
-    max-width: 50%;
-    max-height: 50%;
+    box-sizing: border-box;
 }
 
 #additembtn {
