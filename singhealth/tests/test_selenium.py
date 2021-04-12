@@ -15,6 +15,7 @@ from singhealth.models import Complaint
 from checklist.models import Checklist, ChecklistItem
 import datetime
 import random
+import os
 from django.conf import settings
 # Create your tests here.
 
@@ -26,7 +27,7 @@ password = "~1qaz2wsx"
 class seleniumTest(StaticLiveServerTestCase):
     
     def setUp(self):
-        self.driver = webdriver.Edge(r'C:\\VS JAVA\\msedgedriver.exe')
+        self.driver = webdriver.Edge(os.path.join(settings.BASE_DIR, "msedgedriver.exe"))
         self.client = Client()
         
         #Create Staff User
