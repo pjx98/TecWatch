@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 import xlwt
 from checklist.decorators import *
-import datetime
+from datetime import datetime
 from django.urls import reverse
 
 from django.core.mail import send_mail, EmailMessage
@@ -21,8 +21,8 @@ def export_excel(request):
         auditId = request.POST.get('auditId', -1)
 
     response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = 'attachment; filename=Audits' + \
-        str(datetime.datetime.now()) + '.xls'
+    response['Content-Disposition'] = 'attachment; filename=Audits' + "_" + \
+        str(datetime.today().strftime('%Y-%m-%d')) + '.xls'
         
     wb = xlwt.Workbook(encoding='utf-8')
     ws =  wb.add_sheet('Audits')
