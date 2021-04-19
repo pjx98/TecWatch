@@ -1,0 +1,66 @@
+@startuml
+
+Staff -> Application : Login()
+Application --> Staff : Staff_home()
+
+Staff -> Application : checklist_additem()
+Application -> Application : update_checklistitems()
+
+Staff -> Application : create_audit()
+Application -> Application : update_auditlist()
+Staff -> Application : export_audit()
+Application --> Staff : audit_exported()
+
+Staff -> Application : create_complaint()
+Application -> Application : update_complaintlist()
+
+loop Daily
+    Application -> Tenant : emailnotify_unresolvedcomplaints()
+end
+
+Tenant -> Application : Login()
+Application --> Tenant : Tenant_home()
+
+Tenant -> Application : viewcomplaints()
+Application --> Tenant : complaintlist()
+Tenant -> Application : click_viewreport()
+
+alt Complaint is resolved
+    Application --> Tenant : viewonly_complaint()
+
+else Complaint is open, unresolved
+    loop While Open Complaint
+
+        loop Tenant has updates
+            Tenant -> Application : upload_rectification()
+            Application -> Application : update_tenantrectificationlist()
+        end
+
+        loop Daily
+        Application --> Staff : rectification_update_emailnotify()
+        end
+
+    end
+
+    alt Rectification passable
+        Staff -> Application : Resolve_complaintreport()
+        Application -> Tenant : resolved_complaint_emailnotify()
+    else Failed compliance check again
+        Staff -> Application : Resolve_complaint()
+        Staff -> Application : create_complaint()
+    end
+
+else Complaint deadline expired
+    loop Daily, until updated complaint
+        Application --> Staff : emailnotify_expiredcomplaint()
+    end
+
+end
+
+Staff -> Application : Logout()
+Application --> Staff : Loginpage()
+
+Tenant -> Application : Logout()
+Application --> Tenant : Loginpage()
+
+@enduml
