@@ -1,25 +1,67 @@
 @startuml
 
-Staff -> Application : Login()
-Application --> Staff : Staff_home()
+alt Invalid login credentials
+    Staff -> Application : Invalid_logincredentials()
+    Application -> Backend : check_logincredentials() [STAFF || TENANT]
+    activate Backend
+        Backend -> Backend : check_logincredentials()
+        Backend -> Application : invalid_credentials() 
+    deactivate Backend
+    Application --> Staff : invalid_login_prompt()
+else Successful login
+    Staff -> Application : Login()
+    Application --> Staff : Staff_home()
+end
+
 
 Staff -> Application : checklist_additem()
 Application -> Application : update_checklistitems()
 
+
 Staff -> Application : create_audit()
 Application -> Application : update_auditlist()
-Staff -> Application : export_audit()
-Application --> Staff : audit_exported()
+Staff -> Application : export_audit_excelsheet()
+Application -> Backend : create_excelsheet_audit()
+Backend -> Application : return_excelsheet_audit()
+Application --> Staff : download_excelsheet_audit()
 
-Staff -> Application : create_complaint()
-Application -> Application : update_complaintlist()
 
-loop Daily
-    Application -> Tenant : emailnotify_unresolvedcomplaints()
+alt Valid email form fields submission
+    Staff -> Application : export_email()
+    Application -> Backend : send_email()
+    Backend --> Staff : email_exported()
+else Invalid email form fields submission (Missing form fields/wrong format)
+    Staff -> Application : invalid_export_email()
+    Application --> Staff : prompt_invalid_email_form()
 end
 
-Tenant -> Application : Login()
-Application --> Tenant : Tenant_home()
+
+alt Successful complaint creation
+    Staff -> Application : create_complaint()
+    Application -> Application : update_complaintlist()
+else Invalid complaint creation (Missing form fields/wrong format)
+    Staff -> Application : create_invalid_complaint()
+    Application --> Staff : prompt_invalid_complaintlist_form()
+end
+
+
+loop Daily
+    Application --> Tenant : emailnotify_unresolvedcomplaints()
+end
+
+
+alt Invalid login credentials
+    Tenant -> Application : Invalid_logincredentials()
+    Application -> Backend : check_logincredentials()
+    activate Backend
+        Backend -> Backend : check_logincredentials()
+        Backend -> Application : invalid_credentials() 
+    deactivate Backend
+    Application --> Tenant : invalid_login_prompt()
+else Successful login
+    Tenant -> Application : Login()
+    Application --> Tenant : Tenant_home()
+end
 
 Tenant -> Application : viewcomplaints()
 Application --> Tenant : complaintlist()
@@ -32,8 +74,15 @@ else Complaint is open, unresolved
     loop While Open Complaint
 
         loop Tenant has updates
-            Tenant -> Application : upload_rectification()
-            Application -> Application : update_tenantrectificationlist()
+
+            alt Invalid rectification attempt (Missing form fields/wrong format)
+                Tenant -> Application : upload_invalid_rectification()
+                Application --> Tenant : prompt_invalid_rectification()
+
+            else Successful rectification upload 
+                Tenant -> Application : upload_rectification()
+                Application -> Application : update_tenantrectificationlist()
+            end
         end
 
         loop Daily
@@ -47,6 +96,7 @@ else Complaint is open, unresolved
         Application -> Tenant : resolved_complaint_emailnotify()
     else Failed compliance check again
         Staff -> Application : Resolve_complaint()
+        Application -> Application : update_complaint_resolved()
         Staff -> Application : create_complaint()
     end
 
@@ -54,7 +104,6 @@ else Complaint deadline expired
     loop Daily, until updated complaint
         Application --> Staff : emailnotify_expiredcomplaint()
     end
-
 end
 
 Staff -> Application : Logout()
