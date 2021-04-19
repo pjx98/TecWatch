@@ -20,6 +20,7 @@ import random
 import os
 from django.conf import settings
 from selenium.common.exceptions import ErrorInResponseException
+from checklist.models import *
 # Create your tests here.
 
 staff_username = "test_staff"
@@ -330,6 +331,187 @@ class seleniumTest(StaticLiveServerTestCase):
 
         assert "Test_Complaint_1" in driver.page_source
     
+    # python manage.py test singhealth.tests.test_selenium.seleniumTest.test_complaint_form
+    def test_complaint_form(self):
+        
+        '''
+        This is to test the mandatory fields in the complaint form. 
+        This ensures that each field in the complaint form must be filled up before the user can submit the complaint.
+        '''
+        
+        #login staff
+        driver = self.driver
+        driver.get('%s%s' % (self.live_server_url, '/singhealth/'))
+        time.sleep(2)
+        username_input = driver.find_element_by_name("username")
+        username_input.send_keys(self.staff.username)
+        time.sleep(2)
+        password_input = driver.find_element_by_name("password")
+        password_input.send_keys(password)
+        time.sleep(2)
+        driver.find_element_by_css_selector('form input[type="submit"]').click()
+        time.sleep(2)
+        
+        #add items to checklist
+        driver.find_element_by_name("add_items_btn").click()
+        time.sleep(2)
+        
+        # Input Description
+        description_input = driver.find_element_by_name("description")
+        description_input.send_keys("Floor slippery")
+        time.sleep(1)
+        
+        #submit description
+        driver.find_element_by_name("submit_description").click()
+        time.sleep(1)
+        
+        # Input Description
+        description_input = driver.find_element_by_name("description")
+        description_input.send_keys("Tables are dirty")
+        time.sleep(1)
+        
+        #submit description
+        driver.find_element_by_name("submit_description").click()
+        time.sleep(1)
+        
+        #return to homepage
+        driver.find_element_by_name("return").click()
+        time.sleep(1)
+        
+        # Update checklist
+        driver.find_element_by_name("update_fnb_btn").click()
+        time.sleep(1)
+        
+        #add items
+        driver.find_element_by_id("id_items_0").click()
+        driver.find_element_by_id("id_items_1").click()
+        time.sleep(1)
+        
+        #submit
+        driver.find_element_by_name("update").click()
+        time.sleep(1)
+        
+        #go back homepage
+        driver.find_element_by_name("return").click()
+        time.sleep(1)
+        
+        #################################################################################################################
+        #Create audit for tenant
+        # go to tenant view audits
+        driver.find_element_by_name("audit").click()
+        time.sleep(1)
+        
+        # New audit
+        driver.find_element_by_name("tenantId").click()
+        time.sleep(1)
+        
+        # Choose F&B option
+        driver.find_element_by_id("fnb").click()
+        time.sleep(1)
+        
+        #add items in audit
+        driver.find_element_by_id("id_items_0").click()
+        driver.find_element_by_id("id_items_1").click()
+        time.sleep(1)
+        
+        #submit items for audit
+        driver.find_element_by_name("category").click()
+        time.sleep(1)
+        
+        
+        # go to tenant view audits
+        driver.find_element_by_name("audit").click()
+        time.sleep(1)
+        
+        driver.find_element_by_name("return").click()
+        time.sleep(1)
+        
+        #################################################################################################################
+        #Create complaint by Staff
+        # Create Complaint
+        driver.find_element_by_name("create_complaint_btn").click()
+        time.sleep(2)
+        
+        # Submit Complaint, test empty tenant field
+        driver.find_element_by_name("userId").click()
+        time.sleep(1)
+        
+        
+        # Choose tenant from dropdown menu
+        select = Select(driver.find_element_by_name('tenant'))
+        select.select_by_visible_text(tenant_username)
+        time.sleep(1)
+        
+        # Submit Complaint, test empty checklist field
+        driver.find_element_by_name("userId").click()
+        time.sleep(1)
+        
+        #choose checklist
+        select = Select(driver.find_element_by_name('checklist'))
+        #select.select_by_visible_text(str(datetime.today().strftime('%Y-%m-%d')) + '; Score: 2 (test_tenant)')
+        select.select_by_index(1)
+        time.sleep(1)
+        
+        # Submit Complaint, test empty deadline field
+        driver.find_element_by_name("userId").click()
+        time.sleep(1)
+        
+        
+        # Input deadline field
+        deadline_input = driver.find_element_by_name("deadline")
+        deadline_input.send_keys("03/28/2022")
+        time.sleep(1)
+        
+        # Submit Complaint, test empty input field
+        driver.find_element_by_name("userId").click()
+        time.sleep(1)
+        
+        # Input subject field
+        subject_input = driver.find_element_by_name("subject")
+        subject_input.send_keys("Test_Complaint_1")
+        time.sleep(1)
+        
+        # Submit Complaint, test empty file field
+        driver.find_element_by_name("userId").click()
+        time.sleep(1)
+        
+        # Upload Image. 
+        upload_field = driver.find_element_by_xpath("//input[@type='file']")
+        upload_field.send_keys("D:\\Dropbox\\beautiful-sunset-tropical-beach-palm-260nw-1716193708.jpg")
+        time.sleep(1)
+        
+        # Submit Complaint, test empty comment field
+        driver.find_element_by_name("userId").click()
+        time.sleep(1)
+        
+         # Input comment field
+        comment_input = driver.find_element_by_name("comments")
+        comment_input.send_keys("Test_Comments")
+        time.sleep(1)
+        
+        # Submit Complaint, test empty notes field
+        driver.find_element_by_name("userId").click()
+        time.sleep(1)
+        
+        # Input Notes field
+        notes_input = driver.find_element_by_name("notes")
+        notes_input.send_keys("Test_Notes")
+        time.sleep(1)
+        
+        # Submit Complaint
+        driver.find_element_by_name("userId").click()
+        time.sleep(1)
+        
+        # Verify if complaint is submitted successfully
+        driver.find_element_by_name("complaintId").click()
+        time.sleep(1)
+        
+        # Return to staff homepage
+        driver.find_element_by_name("loginId").click()
+        time.sleep(2)
+        
+        assert "test_staff" in driver.page_source 
+        
     # python manage.py test singhealth.tests.test_selenium.seleniumTest.test_brute_force_login
     def test_brute_force_login(self):
         """
@@ -382,6 +564,61 @@ class seleniumTest(StaticLiveServerTestCase):
         time.sleep(4)
         
         assert "Account locked" in driver.page_source
+        
+    # python manage.py test singhealth.tests.test_selenium.seleniumTest.test_login
+    def test_login(self):
+        '''
+        Test invalid input for login system
+        '''
+        
+        driver = self.driver
+        driver.get('%s%s' % (self.live_server_url, '/singhealth/'))
+        time.sleep(2)
+        
+        # test invalid username, correct password
+        username_input = driver.find_element_by_name("username")
+        username_input.send_keys("test_staff_2")
+        time.sleep(2)
+        password_input = driver.find_element_by_name("password")
+        password_input.send_keys(password)
+        time.sleep(2)
+        driver.find_element_by_css_selector('form input[type="submit"]').click()
+        time.sleep(2)
+        
+        # test invalid password, correct username
+        username_input = driver.find_element_by_name("username")
+        username_input.send_keys(self.staff.username)
+        time.sleep(2)
+        password_input = driver.find_element_by_name("password")
+        password_input.send_keys("12345")
+        time.sleep(2)
+        driver.find_element_by_css_selector('form input[type="submit"]').click()
+        time.sleep(2)
+        
+        # test empty inputs
+        username_input = driver.find_element_by_name("username")
+        username_input.send_keys("")
+        time.sleep(2)
+        password_input = driver.find_element_by_name("password")
+        password_input.send_keys("")
+        time.sleep(2)
+        driver.find_element_by_css_selector('form input[type="submit"]').click()
+        time.sleep(2)
+        
+        # test valid staff login credentials
+        username_input = driver.find_element_by_name("username")
+        username_input.send_keys(self.staff.username)
+        time.sleep(2)
+        password_input = driver.find_element_by_name("password")
+        password_input.send_keys(password)
+        time.sleep(2)
+        driver.find_element_by_css_selector('form input[type="submit"]').click()
+        time.sleep(2)
+        
+        assert "test_staff" in driver.page_source
+        
+        
+        
         
    
     # python manage.py test singhealth.tests.test_selenium.seleniumTest.test_download_to_excel_and_export_to_email

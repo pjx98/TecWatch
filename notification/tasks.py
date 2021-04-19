@@ -6,7 +6,7 @@ from singhealth.models import Complaint
 import datetime
 
 
-@background(schedule = 5 * 60)
+@background()
 def send_notification():
     for tenant in User.objects.filter(groups__name='Tenant'):
         complaints = Complaint.objects.filter(tenant = tenant, status = 'Open').count()
@@ -28,7 +28,7 @@ def send_notification():
                 email.content_subjtype = 'html'
                 email.send()
                 
-@background(schedule = 5 * 60)
+@background()
 def check_deadline():
     for complaint in Complaint.objects.filter(status='Open'):
         today = datetime.date.today()

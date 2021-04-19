@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'checklist',
     'notification',
     'background_task',
-    'axes'
+    'axes',
+    'django_extensions',
+    'models2puml',
     
 ]
 
@@ -63,7 +65,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'axes.middleware.AxesMiddleware',
 ]
-
+EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 ROOT_URLCONF = 'tecwatch.urls'
 
 TEMPLATES = [
@@ -152,7 +154,7 @@ AXES_USE_USER_AGENT = True #If True, lock out and log based on the IP address an
                            #This settings has no effect if the AXES_ONLY_USER_FAILURES setting is active. Default: False
 
 AXES_COOLOFF_TIME = 1 # timeout in hours
-AXES_FAILURE_LIMIT = 30
+AXES_FAILURE_LIMIT = 5
 AXES_LOCK_OUT_BY_USER_OR_IP = True # If True, prevent login from if the attempt limit has been exceeded for IP or username. 
 
 

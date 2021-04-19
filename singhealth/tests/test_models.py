@@ -4,11 +4,7 @@ import datetime
 from django.contrib.auth.models import User, Group
 from singhealth.models import Complaint
 
-<<<<<<< HEAD
 # python manage.py test singhealth.tests.test_models.ComplaintModelTest
-=======
-    
->>>>>>> 7fb9a549fb4301424d17a34b15cc001be3ad5ffd
 class ComplaintModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):

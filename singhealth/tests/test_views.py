@@ -53,12 +53,33 @@ class loginInRequired(TestCase):
         response = self.client.get(reverse("hometenant"))
         self.assertRedirects(response, '/singhealth/?next=/singhealth/hometenant/')
         
-    def test_invalid_login(self):
+    def test_login_with_invalid_and_valid(self):
         login = self.client.login(username='invalid', password='invalid')
         
         # invalid login should remain in login page
         response = self.client.get(reverse('login'))
         self.assertEqual(response.status_code, 200)
+        
+        login = self.client.login(username='', password='invalid')
+        
+        # invalid login should remain in login page
+        response = self.client.get(reverse('login'))
+        self.assertEqual(response.status_code, 200)
+        
+        login = self.client.login(username='invalid', password='')
+        
+        # invalid login should remain in login page
+        response = self.client.get(reverse('login'))
+        self.assertEqual(response.status_code, 200)
+        
+        login = self.client.login(username='staff', password='~1qaz2wsx')
+        
+        # correct login
+        response = self.client.get(reverse('homestaff'))
+        self.assertEqual(response.status_code, 200)
+        
+        
+        
         
         
     def test_logged_in_uses_correct_template(self):
