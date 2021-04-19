@@ -14,6 +14,7 @@ Peh Jing Xiang -> pjx98
 to run our application: 
 
 '''
+
 1. clone master branch
 2. navigate to TecWatch-master directory
 3. pip install -r requirements.txt
@@ -28,6 +29,7 @@ to run our application:
 to run our tests:
 
 '''
+
 refer to the codes in our tests folders for commands
 
 '''
