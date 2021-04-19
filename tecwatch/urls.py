@@ -25,9 +25,6 @@ from django.views.generic import RedirectView
 from background_task.models import Task
 
 
-
-
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('singhealth/', include('singhealth.urls')),
@@ -39,8 +36,9 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+    
 
 Task.objects.all().delete()
-check_deadline(repeat_until=None, repeat=120)
-send_notification(repeat_until=None, repeat=120)
+check_deadline(repeat_until=None, repeat=300, schedule = 5)
+send_notification(repeat_until=None, repeat=300, schedule = 5)
 #python manage.py process_tasks

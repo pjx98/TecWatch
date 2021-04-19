@@ -2,7 +2,7 @@ from notification.tasks import *
 from django.core import mail
 from datetime import date
 import time
-
+from django.test.utils import override_settings    
 from django.test import TestCase
 from django.contrib.auth.models import User, Group
 from singhealth.models import Complaint
@@ -12,6 +12,7 @@ from background_task.tasks import tasks
 from background_task.models import Task
 
 # python manage.py test singhealth.tests.test_tasks.EmailTest
+
 
 class EmailTest(TestCase):
     def setUp(self):

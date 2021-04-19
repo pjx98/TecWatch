@@ -158,7 +158,7 @@ def view_complaint(request):
             complaint = Complaint.objects.get(id = complaintid)  
             complaint.status = 'Resolved' 
             complaint.save()
-            update_notification("resolved", complaintid)
+            update_notification("resolved", complaintid, schedule = 5)
             
         #context['action'] = action
         updates = Update.objects.filter(complaint = complaint)
@@ -232,7 +232,7 @@ def update_success(request):
             userId = complaint.tenant.username
             u.edit_name = complaint.tenant.username
             u.save()
-            update_notification("rectification", complaintId)
+            update_notification("rectification", complaintId, schedule=5)
             return redirect(reverse('updatesuccesspage'))
             
     
