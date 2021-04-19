@@ -1,7 +1,7 @@
 # Django Singhealth Project
 
 
-# Group Members:
+## Group Members:
 
 Chang Min xuan -> Minxuan77
 
@@ -13,12 +13,12 @@ Peh Jing Xiang -> pjx98
 
 
 
-# Getting Started
+## Getting Started
 ```
 git clone https://github.com/minxuan77/TecWatch.git
 ```
 
-# To run our application: 
+## To run our application: 
 
 Navigate to TecWatch-master directory
 
@@ -26,14 +26,14 @@ After creating virtual environment and activating it, run:
 ```
 pip install -r requirements.txt
 ```
-# Setting up database
+## Setting up database
 
 Run these commands:
 ```
 python manage.py makemigrations
 python manage.py migrate
 ```
-# To run web application:
+## To run web application:
 
 Run the following command:
 ```
@@ -46,7 +46,7 @@ python manage.py process_tasks
 
 
 
-# Running Tests
+## Running Tests
 
 Navigate to singhealth/tests folder where our tests are located.
 
@@ -59,4 +59,4 @@ Example is show below:
 python manage.py test singhealth.tests.test_selenium.seleniumTest.test_user_full_cycle
 ```
 
-# More details can be found in our final report
+## More details can be found in our final report
