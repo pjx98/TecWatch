@@ -2,7 +2,7 @@
 
 alt Invalid login credentials
     Staff -> Application : Invalid_logincredentials()
-    Application -> Backend : check_logincredentials() [STAFF || TENANT]
+    Application -> Backend : check_logincredentials()
     activate Backend
         Backend -> Backend : check_logincredentials()
         Backend -> Application : invalid_credentials() 
