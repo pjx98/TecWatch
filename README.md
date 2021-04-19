@@ -12,6 +12,7 @@ Pan Feng -> Adler-p
 Peh Jing Xiang -> pjx98
 
 to run our application: 
+
 '''
 1. clone master branch
 2. navigate to TecWatch-master directory
@@ -21,10 +22,13 @@ to run our application:
 6. python manage.py runserver
 7. open another terminal and navigate to the same directory
 8. python manage.py process_tasks 
+
 '''
 
 to run our tests:
+
 '''
 refer to the codes in our tests folders for commands
+
 '''
 
