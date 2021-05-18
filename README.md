@@ -11,6 +11,24 @@ Pan Feng -> Adler-p
 
 Peh Jing Xiang -> pjx98
 
+## Features:
+
+ * Add new tenant/delete existing tenant
+ * Fill in and submit checklist
+ * Upload photos (e.g. non-compliance)
+ * Automatically compute checklist score
+ * Export/send checklist to email address
+ * Select timeframe to rectify non-compliance (i.e. immediate, <3 days, <1 week) Tenant may request for 
+ extension with reasons.
+ * Dashboard to show tenants’ rectification progress
+ * Security feature to securely transmit and store data
+ * Retail tenant to write notes/upload photos to close 
+findings
+ * Prompt retail tenant on outstanding non-compliance
+ * Dynamic checklist function.
+
+
+
 
 
 ## Getting Started
@@ -59,4 +77,7 @@ Example is show below:
 python manage.py test singhealth.tests.test_selenium.seleniumTest.test_user_full_cycle
 ```
 
-## More details can be found in our final report
+More details can be found in our final report: [C4G6_Final_Report.pdf](https://github.com/pjx98/TecWatch/blob/master/C4G6_Final_Report.pdf)
+
+
+
